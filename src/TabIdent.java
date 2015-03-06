@@ -7,7 +7,7 @@ public class TabIdent {
 	
 	public TabIdent(int taille){
 		this.taille = taille;
-		
+		table = new HashMap<String,Ident>(taille);
 	}
 	
 	public Ident chercheIdent(String clef){
@@ -15,7 +15,7 @@ public class TabIdent {
 	}
 	
 	public boolean existeIdent(String clef){
-		
+		return table.containsKey(clef);
 	}
 	
 	public void rangeIdent(String clef, Ident id){
