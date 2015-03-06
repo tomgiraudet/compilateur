@@ -1,9 +1,11 @@
 
 public class IdConst extends Ident {
 	
+	protected int value;
 	
-	public IdConst(){
-		super();
+	public IdConst(Type _type, int _value){
+		super(_type);
+		value = _value;
 	}
 
 }
