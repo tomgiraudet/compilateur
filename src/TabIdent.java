@@ -1,9 +1,6 @@
 import java.util.HashMap;
 
 public class TabIdent {
-<<<<<<< HEAD
-dezrtyu
-=======
 
 	int taille;
 	private HashMap<String,Ident> table;
@@ -14,7 +11,7 @@ dezrtyu
 	}
 	
 	public Ident chercheIdent(String clef){
-		
+		return table.get(clef);
 	}
 	
 	public boolean existeIdent(String clef){
@@ -22,7 +19,6 @@ dezrtyu
 	}
 	
 	public void rangeIdent(String clef, Ident id){
-		
+		table.put(clef, id);
 	}
->>>>>>> 000d895027d48ea9d14ad68c9736e596ca60d589
 }
