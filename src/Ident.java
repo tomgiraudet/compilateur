@@ -1,11 +1,10 @@
 
 public class Ident {
 	
-	protected type;
+	protected Type type;
 	
 	public Ident(Type _type){
-	 type = _type;
-	 return this;	
+	 type = _type;	
 	}
 
 }
