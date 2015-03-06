@@ -7,4 +7,7 @@ public class Ident {
 	 type = _type;	
 	}
 
+	public Type getType(){
+		return type;
+	}
 }
