@@ -7,5 +7,9 @@ public class IdConst extends Ident {
 		super(_type);
 		value = _value;
 	}
+	
+	public int getValue(){
+		return value;
+	}
 
 }
