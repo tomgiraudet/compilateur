@@ -1,0 +1,16 @@
+
+public enum Op {
+	
+	PLUS,  // +
+	MOINS,  // -
+	MUL,  // *
+	DIV,  // /
+	INF,  // <
+	SUP,  // >
+	INFE,  // <=
+	SUPE,  // >=
+	EQU,  // ==
+	DIFF,  // !=
+	AND,  // &&
+	OR;  // ||
+}
