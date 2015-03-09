@@ -3,7 +3,7 @@ import java.util.Stack;
 public class Expression {
 	Stack<String> types = new Stack<String>();
 	Stack<Character> operations = new Stack<Character>();
-	String[] typesAutorises = new String[]
+	String[] typesAutorises = new String[5];
 	
 	
 	void ajoutType(String type){
@@ -11,8 +11,10 @@ public class Expression {
 	}
 	
 	void ajoutOp(char op){
-		operations.push(op)
+		operations.push(op);
 	}
 	
-	boolean testPlus(String type1)
+	boolean testPlus(String type1){
+		return false;
+	}
 }
