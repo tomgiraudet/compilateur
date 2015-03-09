@@ -12,4 +12,19 @@ public class IdVar extends Ident{
 		return offset;
 	}
 
+	public boolean isConst() {
+		return false;
+	}
+	
+	public boolean isVar() {
+		return true;
+	}
+
+	public boolean isParam() {
+		return false;
+	}
+	
+	public boolean isFonction() {
+		return false;
+	}
 }

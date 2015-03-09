@@ -10,4 +10,5 @@ public class Ident {
 	public Type getType(){
 		return type;
 	}
+	
 }
