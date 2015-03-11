@@ -26,6 +26,10 @@ public class Yaka implements YakaConstants {
     }
     try {
       analyseur = new Yaka(input);
+      expression = new Expression();
+      tabIdent = new TabIdent();
+      //Declaration = new Declaration();
+      yvm = new YVM("result.yvm");
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
@@ -239,6 +243,7 @@ public class Yaka implements YakaConstants {
       }
       opAdd();
       terme();
+                 expression.testStacks();
     }
   }
 
@@ -258,6 +263,7 @@ public class Yaka implements YakaConstants {
       }
       opMul();
       facteur();
+                 expression.testStacks();
     }
   }
 
@@ -274,6 +280,7 @@ public class Yaka implements YakaConstants {
     case 51:
       opNeg();
       primaire();
+                         expression.testStacks();
       break;
     default:
       jj_la1[12] = jj_gen;
@@ -306,7 +313,7 @@ public class Yaka implements YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case entier:
       jj_consume_token(entier);
-            expression.ajoutType(Type.INT); yvm.iconst(tokenManager.entierLu);
+            expression.ajoutType(Type.INT); yvm.iconst(YakaTokenManager.entierLu);
       break;
     case ident:
       jj_consume_token(ident);

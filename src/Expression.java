@@ -14,7 +14,8 @@ public class Expression {
 	}
 	
 	void ajoutOp(Operator op){
-		operations.push(Operator);
+		System.out.println("push called");
+		operations.push(op);
 	}
 	
 	Type testAddSubMulDiv(Type type1, Type type2){
@@ -59,9 +60,11 @@ public class Expression {
 	}
 	
 	void testStacks(){
-		while(operations.peek() != null){
-			switch(operations.pop()){
+		Operator op = operations.pop();
+		while(op != null){			
+			switch(op){
 			case PLUS :
+				System.out.println("ici plus");
 				Yaka.yvm.iadd();
 				ajoutType(testAddSubMulDiv(types.pop(), types.pop()));
 				break;
@@ -112,6 +115,8 @@ public class Expression {
 			default :
 				ajoutType(Type.ERROR);
 			}
+			if(!operations.isEmpty()) op = operations.pop();
+			else break;
 		}
 	}
 	/*

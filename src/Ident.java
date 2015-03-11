@@ -11,8 +11,8 @@ public abstract class Ident {
 		return type;
 	}
 	
-	public abstract boolean isVar();
-	public abstract boolean isConst();
+	//public boolean isVar(){};
+	//public boolean isConst(){};
 	
 	
 }
