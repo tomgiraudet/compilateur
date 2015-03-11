@@ -50,7 +50,7 @@ public class Expression {
 		return Type.ERROR;
 	}
 	void testStacks(){
-		while(operations.peek() != null){
+		while(!operations.isEmpty()){				
 			switch(operations.pop()){
 			case PLUS :
 				Yaka.yvm.iadd();
@@ -100,6 +100,12 @@ public class Expression {
 				Yaka.yvm.iand();
 				ajoutType(testAndOr(types.pop(), types.pop()));
 				break;
+			case NOT :
+				Yaka.yvm.inot();
+				break;
+			case NEG :
+				Yaka.yvm.ineg();
+				break;
 			default :
 				ajoutType(Type.ERROR);
 			}
@@ -111,7 +117,7 @@ public class Expression {
 		if(op==Operator.NEG) {
 			Yaka.yvm.ineg();
 		} else {
-			throw new ErrorException(op+" n'est pas la negation");
+		//	throw new ErrorException(op+" n'est pas la negation");
 		}
 	}
 	
@@ -120,7 +126,7 @@ public class Expression {
 		if(op==Operator.NOT) {
 		Yaka.yvm.inot();
 		} else {
-			throw new ErrorException(op+" n'est pas le non");
+		//	throw new ErrorException(op+" n'est pas le non");
 		}
 	}
 

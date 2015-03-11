@@ -11,7 +11,7 @@ public enum Operator {
 	EQU, // ==
 	DIFF, // !=
 	AND, // &&
-	OR; // ||
-	NEG; // -
+	OR, // ||
+	NEG, // -
 	NOT; // !
 }
