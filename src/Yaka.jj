@@ -21,6 +21,7 @@ public class Yaka {
   public static Declaration declaration;
   public static TabIdent tabIdent;
   public static Expression expression;
+  public static EntreeSortie inOut;
   public static YVM yvm;
 
   public static void main(String args[]) { 
@@ -48,6 +49,7 @@ public class Yaka {
       tabIdent = new TabIdent();
       declaration = new Declaration();
       yvm = new YVM("result.yvm");
+      inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
@@ -200,13 +202,8 @@ void type() :{}
  */
 void suiteInstr() : {}
 {  
- instruction() {System.out.println("une instruction");}
-  (
-  ";"
-  	(
-  		instruction() {System.out.println("une autre instruction");}
-  	)?
-  )*
+ instruction()
+  (";" (instruction())?)*
 }
 
 void instruction() : {}
@@ -218,7 +215,6 @@ void instruction() : {}
 
 void affectation() : {}
 {
-{System.out.println("dans affectation");}
  <ident> {expression.setAffectation(YakaTokenManager.identLu);} 
  "=" 
  expression() {expression.affectation();}  
@@ -226,19 +222,19 @@ void affectation() : {}
 
 void lecture() : {}
 {
- <LIRE> "(" <ident> ")"
+ <LIRE> "(" <ident> ")" {inOut.lire();}
 }
 
 void ecriture() : {}
 {
  <ECRIRE> "(" 
  (
- 	expression() 
- 	| <chaine> {yvm.ecrireChaine(YakaTokenManager.chaineLue);} 
+ 	expression() {inOut.ecrire();}
+ 	| <chaine> {inOut.ecrireChaine(YakaTokenManager.chaineLue);} 
  )
  
  ")"
- | <ALALIGNE>
+ | <ALALIGNE> {inOut.newLine();}
 }
 
 
