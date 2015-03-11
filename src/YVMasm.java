@@ -187,9 +187,9 @@ public class YVMasm extends YVM {
 			Ecriture.ecrireStringln(this.out, ".DATA");
 			Ecriture.ecrireStringln(this.out,"	mess" + nbMessage + " DB \"" + chaine + "=$\"");
 			Ecriture.ecrireStringln(this.out, ".CODE");
-			Ecriture.ecrireStringln(this.out, "	lea dx, mess" + nbMessage);
-			Ecriture.ecrireStringln(this.out, "	push dx");
-			Ecriture.ecrireStringln(this.out, "	call ecrch");
+			Ecriture.ecrireStringln(this.out,"	lea dx, mess" + nbMessage);
+			Ecriture.ecrireStringln(this.out,"	push dx");
+			Ecriture.ecrireStringln(this.out,"	call ecrch");
 			nbMessage++;
 		}
 		
