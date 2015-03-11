@@ -12,4 +12,5 @@ public enum Operator {
 	DIFF,  // !=
 	AND,  // &&
 	OR;  // ||
+	//NON; // NON
 }

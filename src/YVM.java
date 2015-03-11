@@ -10,6 +10,15 @@ public class YVM {
 		this.out = Ecriture.ouvrir(this.fileName);
 	}
 	
+	// Debut-Fin de code
+	public void entete (){
+		Ecriture.ecrireStringln(this.out,"entete");		
+	}
+	
+	public void enqueue (){
+		Ecriture.ecrireStringln(this.out,"queue");		
+	}
+	
 	// Arithmetique
 	public void iadd (){
 		Ecriture.ecrireStringln(this.out,"iadd");		
