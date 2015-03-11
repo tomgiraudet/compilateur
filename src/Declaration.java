@@ -38,7 +38,8 @@ public class Declaration {
 		lastConstanteName = _nom;
 	}
 	public void setConstante(Type _type, int _valeur){
-		Yaka.TabIdent.rangeIdent(lastConstanteName, new IdConst(_type, offset));
+		if (Yaka.tabIdent.existeIdent(lastConstanteName))
+		Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, offset));
 		offset -=2;
 		// Penser à rajouter l'erreur si la constante est déjà présente dans la table (If + erreur)
 	}
