@@ -6,5 +6,9 @@ public class Ident {
 	public Ident(Type _type){
 	 type = _type;	
 	}
-
+	
+	public Type getType(){
+		return type;
+	}
+	
 }
