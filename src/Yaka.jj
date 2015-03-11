@@ -140,9 +140,9 @@ TOKEN  :
 /**************************************/
 void analyse() : {}
 {
-   <PROGRAMME> <ident>	
+   <PROGRAMME>{yvm.entete();} <ident>	
    bloc()
-   <FPROGRAMME> 
+   <FPROGRAMME> {yvm.enqueue();}
 }
 
 void bloc() : {}{
@@ -235,39 +235,39 @@ void primaire (): {}
 }
 
 void valeur () : {}
-{ <entier> 		
+{ <entier> {expression.ajoutType(Type.INT); yvm.iconst(tokenManager.entierLu);}		
  | <ident> 		
- | <VRAI> 		
- | <FAUX> 		
+ | <VRAI> {expression.ajoutType(Type.BOOL);}		
+ | <FAUX> {expression.ajoutType(Type.BOOL);}		
  
 }
 
 void opRel() : {}
 {
-   "=" 		
- | "<>" 	
- | "<" 		
- | "<=" 	
- | ">" 		
- | ">=" 	
+   "=" 		{expression.ajoutOp(Operator.EQU);}	
+ | "<>" 	{expression.ajoutOp(Operator.DIFF);}	
+ | "<" 		{expression.ajoutOp(Operator.INF);}
+ | "<=" 	{expression.ajoutOp(Operator.INFE);}
+ | ">" 		{expression.ajoutOp(Operator.SUP);}
+ | ">=" 	{expression.ajoutOp(Operator.SUPE);}
 } 
 
 void opAdd() : {}
 {
-    "+"		
-  |  "-"  
-  | <OU> 	
+    "+"	{expression.ajoutOp(Operator.PLUS);}	
+  |  "-" {expression.ajoutOp(Operator.MOINS);}  
+  | <OU> {expression.ajoutOp(Operator.OR);}	
 }
 
 void opMul() : {}
 {
-  "*"		
-  | "/"		
-  | <ET>	
+  "*" {expression.ajoutOp(Operator.MUL);}		
+  | "/"	{expression.ajoutOp(Operator.DIV);}	
+  | <ET> {expression.ajoutOp(Operator.AND);}	
 } 
 
 void opNeg() : {}
-{ "-" 		
+{ "-"		
  | <NON>	
 }
 

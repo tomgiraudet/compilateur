@@ -114,7 +114,7 @@ public class Expression {
 			}
 		}
 	}
-	
+	/*
 	public void pushInteger(int a) {
 		this.types.push(Type.INT);
 		Yaka.yvm.iconst(a);
@@ -141,5 +141,5 @@ public class Expression {
 			throw ErrorException("Ident in parameter is null");
 		}
 	}
-
+*/
 }

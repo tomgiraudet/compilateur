@@ -2,12 +2,10 @@ import java.util.HashMap;
 
 public class TabIdent {
 
-	int taille;
 	private HashMap<String,Ident> table;
 	
-	public TabIdent(int taille){
-		this.taille = taille;
-		table = new HashMap<String,Ident>(taille);
+	public TabIdent(){
+		table = new HashMap<String,Ident>();
 	}
 	
 	public Ident chercheIdent(String clef){
