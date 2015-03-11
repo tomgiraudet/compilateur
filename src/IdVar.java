@@ -19,12 +19,4 @@ public class IdVar extends Ident{
 	public boolean isVar() {
 		return true;
 	}
-
-	public boolean isParam() {
-		return false;
-	}
-	
-	public boolean isFonction() {
-		return false;
-	}
 }
