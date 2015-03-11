@@ -18,6 +18,7 @@ public class Declaration {
 	public void defTypeVariable(Type _type){
 		lastType = _type;
 	}
+	
 	public void defVariable(String _nom){
 		Yaka.tabIdent.rangeIdent(_nom, new IdVar(lastType, offset));
 		offset -= 2;
@@ -37,15 +38,15 @@ public class Declaration {
 	public void defConstante(String _nom){
 		lastConstanteName = _nom;
 	}
-	public void setConstante(Type _type, int _valeur){
-		if (Yaka.tabIdent.existeIdent(lastConstanteName))
-		Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, offset));
-		offset -=2;
-		// Penser à rajouter l'erreur si la constante est déjà présente dans la table (If + erreur)
+	
+	public void setConstante(Type _type, int _valeur) throws ErrorException{
+		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
+			Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, offset));
+			offset -=2;
+		}else{
+			throw new ErrorException("Constant already exists");
+		}
 	}
-	public void setConstante(String _ident){}
 	
-	
-	
-	
-}
+}	
+
