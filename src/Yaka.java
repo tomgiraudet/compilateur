@@ -352,6 +352,7 @@ public class Yaka implements YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 50:
       jj_consume_token(50);
+         expression.ajoutOp(Operator.PLUS);
       break;
     case 51:
       jj_consume_token(51);

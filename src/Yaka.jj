@@ -140,9 +140,9 @@ TOKEN  :
 /**************************************/
 void analyse() : {}
 {
-   <PROGRAMME> <ident>	
+   <PROGRAMME>{yvm.entete();} <ident>	
    bloc()
-   <FPROGRAMME> 
+   <FPROGRAMME> {yvm.enqueue();}
 }
 
 void bloc() : {}{
@@ -244,30 +244,30 @@ void valeur () : {}
 
 void opRel() : {}
 {
-   "=" 		
- | "<>" 	
- | "<" 		
- | "<=" 	
- | ">" 		
- | ">=" 	
+   "=" {expression.ajoutOp(Operator.EQU);}	
+ | "<>" {expression.ajoutOp(Operator.DIFF);}	
+ | "<" 		{expression.ajoutOp(Operator.INF);}
+ | "<=" 	{expression.ajoutOp(Operator.INFE);}
+ | ">" 		{expression.ajoutOp(Operator.SUP);}
+ | ">=" 	{expression.ajoutOp(Operator.SUPE);}
 } 
 
 void opAdd() : {}
 {
-    "+"		
-  |  "-"  
+    "+"	{expression.ajoutOp(Operator.PLUS);}	
+  |  "-" {expression.ajoutOp(Operator.MOINS);}  
   | <OU> 	
 }
 
 void opMul() : {}
 {
-  "*"		
-  | "/"		
+  "*" {expression.ajoutOp(Operator.MUL);}		
+  | "/"	{expression.ajoutOp(Operator.DIV);}	
   | <ET>	
 } 
 
 void opNeg() : {}
-{ "-" 		
+{ "-"		
  | <NON>	
 }
 
