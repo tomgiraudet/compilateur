@@ -1,8 +1,8 @@
 import java.util.Stack;
 
 public class Expression {
-	Stack<Type> types;
-	Stack<Op> operations;
+	private Stack<Type> types;
+	private Stack<Op> operations;
 	
 	public Expression() {
 		this.types = new Stack<Type>();
