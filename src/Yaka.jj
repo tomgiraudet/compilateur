@@ -235,17 +235,17 @@ void primaire (): {}
 }
 
 void valeur () : {}
-{ <entier> 		
+{ <entier> {expression.ajoutType(Type.INT); yvm.load(tokenManager.entierLu);}		
  | <ident> 		
- | <VRAI> 		
- | <FAUX> 		
+ | <VRAI> {expression.ajoutType(Type.BOOL);}		
+ | <FAUX> {expression.ajoutType(Type.BOOL);}		
  
 }
 
 void opRel() : {}
 {
-   "=" {expression.ajoutOp(Operator.EQU);}	
- | "<>" {expression.ajoutOp(Operator.DIFF);}	
+   "=" 		{expression.ajoutOp(Operator.EQU);}	
+ | "<>" 	{expression.ajoutOp(Operator.DIFF);}	
  | "<" 		{expression.ajoutOp(Operator.INF);}
  | "<=" 	{expression.ajoutOp(Operator.INFE);}
  | ">" 		{expression.ajoutOp(Operator.SUP);}
@@ -256,14 +256,14 @@ void opAdd() : {}
 {
     "+"	{expression.ajoutOp(Operator.PLUS);}	
   |  "-" {expression.ajoutOp(Operator.MOINS);}  
-  | <OU> 	
+  | <OU> {expression.ajoutOp(Operator.OR);}	
 }
 
 void opMul() : {}
 {
   "*" {expression.ajoutOp(Operator.MUL);}		
   | "/"	{expression.ajoutOp(Operator.DIV);}	
-  | <ET>	
+  | <ET> {expression.ajoutOp(Operator.AND);}	
 } 
 
 void opNeg() : {}
