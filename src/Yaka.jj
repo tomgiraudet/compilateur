@@ -235,7 +235,7 @@ void primaire (): {}
 }
 
 void valeur () : {}
-{ <entier> {expression.ajoutType(Type.INT); yvm.load(tokenManager.entierLu);}		
+{ <entier> {expression.ajoutType(Type.INT); yvm.iconst(tokenManager.entierLu);}		
  | <ident> 		
  | <VRAI> {expression.ajoutType(Type.BOOL);}		
  | <FAUX> {expression.ajoutType(Type.BOOL);}		
