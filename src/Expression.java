@@ -168,14 +168,11 @@ public class Expression {
 	}
 
 	void affectation() {
-		System.out.println("affectation called");
 		Type varType = identAffect.getType();
 		Type valType = types.pop();
 		
 		if(this.identAffect.isVar()) {
-			System.out.println("it's a var");
 			if(varType==valType) {
-				System.out.println("istore called");
 				Yaka.yvm.istore(((IdVar)identAffect).getOffset());
 			} else {
 				//throw ErrorException("Types don't match at the affectation.");

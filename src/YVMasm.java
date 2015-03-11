@@ -1,7 +1,7 @@
 
 public class YVMasm extends YVM {
 	
-	private int nbMessage = 1; 
+	private int nbMessage = 0; 
 	
 	public YVMasm(String _fileName){
 		super(_fileName);
@@ -9,20 +9,22 @@ public class YVMasm extends YVM {
 	
 	// Debut-Fin de code
 	public void entete (){
-		Ecriture.ecrireStringln(super.out, "extrn lirent:proc, ecrent:proc");
-		Ecriture.ecrireStringln(super.out, "extrn ecrbool:proc, ecrch:proc");
-		Ecriture.ecrireStringln(super.out, "extrn ligsuiv:proc");
+		Ecriture.ecrireStringln(super.out, "	; entete");
+		Ecriture.ecrireStringln(super.out, "	extrn lirent:proc, ecrent:proc");
+		Ecriture.ecrireStringln(super.out, "	extrn ecrbool:proc, ecrch:proc");
+		Ecriture.ecrireStringln(super.out, "	extrn ligsuiv:proc");
 		Ecriture.ecrireStringln(super.out, ".model SMALL");
-		Ecriture.ecrireStringln(super.out, ".586");
+		Ecriture.ecrireStringln(super.out, ".586\n");
 		Ecriture.ecrireStringln(super.out, ".CODE");
 		Ecriture.ecrireStringln(super.out, "debut:");
 		Ecriture.ecrireStringln(super.out, "	STARTUPCODE");
 	}
 	
 	public void enqueue (){
+		Ecriture.ecrireStringln(super.out, "	;queue");
 		Ecriture.ecrireStringln(super.out, "	nop");
 		Ecriture.ecrireStringln(super.out, "	EXITCODE");
-		Ecriture.ecrireStringln(super.out, "end debut\n");
+		Ecriture.ecrireStringln(super.out, "	End debut\n");
 	}
 	
 	// Arithmetique
@@ -160,19 +162,19 @@ public class YVMasm extends YVM {
 		
 		//Stockage et chargement
 		public void iload (int offset){
-			Ecriture.ecrireStringln(super.out, "	;iload");
-			Ecriture.ecrireStringln(super.out, "	push word ptr [bp+ " + offset + "]\n");
+			Ecriture.ecrireStringln(super.out, "	;iload " + offset);
+			Ecriture.ecrireStringln(super.out, "	push word ptr [bp" + offset + "]\n");
 		}
 		
 		public void istore (int offset){
-			Ecriture.ecrireStringln(super.out, "	;istore");
+			Ecriture.ecrireStringln(super.out, "	;istore " + offset);
 			Ecriture.ecrireStringln(super.out, "	pop ax");
-			Ecriture.ecrireStringln(super.out, "	mov word ptr [bp+ " + offset + "], ax\n");
+			Ecriture.ecrireStringln(super.out, "	mov word ptr [bp" + offset + "], ax\n");
 		}
 		
 		public void iconst (int val){
-			Ecriture.ecrireStringln(super.out, "	;iconst");
-			Ecriture.ecrireStringln(super.out, "	push " + val +"\n");
+			Ecriture.ecrireStringln(super.out, "	;iconst " + val);
+			Ecriture.ecrireStringln(super.out, "	push world ptr " + val +"\n");
 		}
 		
 		//Controle de flot
@@ -191,15 +193,15 @@ public class YVMasm extends YVM {
 		}
 		
 		public void togoto (String etiquette){
-			Ecriture.ecrireStringln(super.out, "	;goto");
+			Ecriture.ecrireStringln(super.out, "	;goto " + etiquette);
 			Ecriture.ecrireStringln(super.out, "	jmp" + etiquette +"\n");	
 		}
 		
 		//Instruction de pile
 		public void ouvrePrinc (int nbVariable){
-			Ecriture.ecrireStringln(super.out, "	;ouvrePrinc");
+			Ecriture.ecrireStringln(super.out, "	;ouvrePrinc " + nbVariable);
 			Ecriture.ecrireStringln(super.out, "	mov bp, sp");
-			Ecriture.ecrireStringln(super.out, "	sub sp " + nbVariable + "\n");
+			Ecriture.ecrireStringln(super.out, "	sub sp, " + nbVariable + "\n");
 		}
 		
 		//Entree - sortie
@@ -209,9 +211,9 @@ public class YVMasm extends YVM {
 		}
 		
 		public void ecrireChaine (String chaine){
-			Ecriture.ecrireStringln(super.out, "	;ecrireChaine");
+			Ecriture.ecrireStringln(super.out, "	;ecrireChaine \"" + chaine + "\"");
 			Ecriture.ecrireStringln(this.out, ".DATA");
-			Ecriture.ecrireStringln(this.out,"	 mess" + nbMessage + " DB \"" + chaine + "=$\"");
+			Ecriture.ecrireStringln(this.out,"	 mess" + nbMessage + " DB \"" + chaine + "$\"");
 			Ecriture.ecrireStringln(this.out, ".CODE");
 			Ecriture.ecrireStringln(this.out,"	 lea dx, mess" + nbMessage);
 			Ecriture.ecrireStringln(this.out,"	 push dx");
@@ -229,7 +231,7 @@ public class YVMasm extends YVM {
 			Ecriture.ecrireStringln(super.out, "	;lireEnt");
 			Ecriture.ecrireStringln(this.out,"	lea dx, [bp" + entier + "]");
 			Ecriture.ecrireStringln(this.out,"	push dx");
-			Ecriture.ecrireStringln(this.out,"	ecrire lirent\n");
+			Ecriture.ecrireStringln(this.out,"	call lirent\n");
 		}
 		
 		public void aLaLigne (){
