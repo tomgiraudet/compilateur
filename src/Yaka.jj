@@ -44,6 +44,10 @@ public class Yaka {
     }
     try {
       analyseur = new Yaka(input);
+      expression = new Expression();
+      tabIdent = new TabIdent();
+      //Declaration = new Declaration();
+      yvm = new YVM("result.yvm");
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
@@ -212,19 +216,19 @@ void simpleExpr() : {}
 {
    terme() 
    (opAdd() 
-   terme()	
+   terme()	{expression.testStacks();}
    )*
 } 
 void terme() : {}
 {
   facteur() 
   (opMul() 
-  facteur()	
+  facteur()	{expression.testStacks();}
   )*
 }
 void facteur() : {}
 {   primaire() 
-  |  opNeg() primaire() 
+  |  opNeg() primaire() {expression.testStacks();}
 }
 
 void primaire (): {}
@@ -235,7 +239,7 @@ void primaire (): {}
 }
 
 void valeur () : {}
-{ <entier> {expression.ajoutType(Type.INT); yvm.iconst(tokenManager.entierLu);}		
+{ <entier> {expression.ajoutType(Type.INT); yvm.iconst(YakaTokenManager.entierLu);}		
  | <ident> 		
  | <VRAI> {expression.ajoutType(Type.BOOL);}		
  | <FAUX> {expression.ajoutType(Type.BOOL);}		

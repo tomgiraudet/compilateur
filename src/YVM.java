@@ -21,6 +21,7 @@ public class YVM {
 	
 	// Arithmetique
 	public void iadd (){
+		System.out.println("called");
 		Ecriture.ecrireStringln(this.out,"iadd");		
 	}
 	
