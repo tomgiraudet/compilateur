@@ -2,14 +2,14 @@ import java.util.Stack;
 
 public class Expression {
 	Stack<Type> types = new Stack<Type>();
-	Stack<Op> operations = new Stack<Op>();
+	Stack<Operator> operations = new Stack<Operator>();
 	
 	
 	void ajoutType(Type t){
 		types.push(t);
 	}
 	
-	void ajoutOp(Op op){
+	void ajoutOp(Operator op){
 		operations.push(op);
 	}
 	
@@ -42,6 +42,7 @@ public class Expression {
 		}
 		return Type.ERROR;
 	}
+	
 	Type testAndOr(Type type1, Type type2){
 		if(type1 == Type.BOOL){
 			if(type2 == Type.BOOL){
@@ -50,27 +51,28 @@ public class Expression {
 		}
 		return Type.ERROR;
 	}
+	
 	Type testStacks(){
-		while(operations.peek() != NULL){
+		while(operations.peek() != null){
 			switch(operations.pop()){
-			case Op.PLUS :
-			case Op.MOINS :
-			case Op.MUL :
-			case Op.DIV :
+			case PLUS :
+			case MOINS :
+			case MUL :
+			case DIV :
 				types.push(testAddSubMulDiv(types.pop(), types.pop()));
 			break;
-			case Op.INF :
-			case Op.SUP :
-			case Op.INFE :
-			case Op.SUPE :
+			case INF :
+			case SUP :
+			case INFE :
+			case SUPE :
 				types.push(testSupInf(types.pop(), types.pop()));
 			break;
-			case Op.EQU :
-			case Op.DIFF :
+			case EQU :
+			case DIFF :
 				types.push(testEQU(types.pop(), types.pop()));
 			break;
-			case Op.OR :
-			case Op.AND :
+			case OR :
+			case AND :
 				types.push(testAndOr(types.pop(), types.pop()));
 			break;
 			default :
