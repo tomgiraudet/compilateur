@@ -2,6 +2,8 @@ import java.util.Stack;
 public class Expression {
 	private Stack<Type> types;
 	private Stack<Operator> operations;
+	private Ident identAffect;
+	
 	public Expression() {
 		this.types = new Stack<Type>();
 		this.operations = new Stack<Operator>();
@@ -50,7 +52,7 @@ public class Expression {
 		return Type.ERROR;
 	}
 	void testStacks(){
-		while(operations.peek() != null){
+		while(!operations.isEmpty()){
 			switch(operations.pop()){
 			case PLUS :
 				Yaka.yvm.iadd();
@@ -149,4 +151,37 @@ public class Expression {
 			throw ErrorException("Ident in parameter is null");
 		}
 	}*/
+	void setAffectation(String nom) {
+		if(Yaka.tabIdent.existeIdent(nom)) {
+			identAffect = Yaka.tabIdent.chercheIdent(nom);
+		} else {
+			throw ErrorException(nom+" don't exist");
+		}
+	}
+
+	void affectation() {
+		
+		Type varType = identAffect.getType();
+		Type valType = types.pop();
+		
+		if(this.identAffect.isVar()) {
+			
+			if(varType==valType) {
+				Yaka.yvm.istore(((IdVar)identAffect).getOffset());
+			} else {
+				throw ErrorException("Types don't match at the affectation.");
+				
+				if(valType==Type.ERROR) {
+					throw ErrorException("Error in the expression.");
+				
+				} else {
+					throw ErrorException("Type issue.");
+				}
+			}
+			
+		} else {
+			throw ErrorException("This isn't a variable");
+		}
+	}
+	
 }
