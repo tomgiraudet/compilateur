@@ -136,11 +136,13 @@ public class Expression {
 	/*public void pushInteger(int a) {
 		this.types.push(Type.INT);
 		Yaka.yvm.iconst(a);
-	}
+	}*/
 	public void pushBoolean(int a) {
 		this.types.push(Type.BOOL);
 		Yaka.yvm.iconst(a);
 	}
+	
+	
 	public void pushIdent(String id) {
 		Ident ident = Yaka.tabIdent.chercheIdent(id);
 		if(ident!=null) {
@@ -150,43 +152,44 @@ public class Expression {
 			} else if(ident.isConst()) {
 				Yaka.yvm.iconst(((IdConst)ident).getValue());
 			} else {
-				throw new ErrorException(id+" isn't a constant or a variable");
+	//			throw new ErrorException(id+" isn't a constant or a variable");
 			}
 		} else {
-			this.stackType.push(Type.ERROR);
-			throw ErrorException("Ident in parameter is null");
+			this.types.push(Type.ERROR);
+		//	throw ErrorException("Ident in parameter is null");
 		}
-	}*/
+	}
 	void setAffectation(String nom) {
 		if(Yaka.tabIdent.existeIdent(nom)) {
 			identAffect = Yaka.tabIdent.chercheIdent(nom);
 		} else {
-			throw ErrorException(nom+" don't exist");
+			//throw ErrorException(nom+" don't exist");
 		}
 	}
 
 	void affectation() {
-		
+		System.out.println("affectation called");
 		Type varType = identAffect.getType();
 		Type valType = types.pop();
 		
 		if(this.identAffect.isVar()) {
-			
+			System.out.println("it's a var");
 			if(varType==valType) {
+				System.out.println("istore called");
 				Yaka.yvm.istore(((IdVar)identAffect).getOffset());
 			} else {
-				throw ErrorException("Types don't match at the affectation.");
+				//throw ErrorException("Types don't match at the affectation.");
 				
 				if(valType==Type.ERROR) {
-					throw ErrorException("Error in the expression.");
+					//throw ErrorException("Error in the expression.");
 				
 				} else {
-					throw ErrorException("Type issue.");
+					//throw ErrorException("Type issue.");
 				}
 			}
 			
 		} else {
-			throw ErrorException("This isn't a variable");
+			//throw ErrorException("This isn't a variable");
 		}
 	}
 	

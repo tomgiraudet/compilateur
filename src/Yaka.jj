@@ -144,7 +144,8 @@ TOKEN  :
 /**************************************/
 void analyse() : {}
 {
-   <PROGRAMME>{yvm.entete();} <ident>	
+   <PROGRAMME>{yvm.entete();} 
+   <ident>	
    bloc()
    <FPROGRAMME> {yvm.enqueue();}
 }
@@ -153,7 +154,7 @@ void bloc() : {}{
  (declConst())*
  (declVar())*		
    {yvm.ouvrePrinc(Math.abs(declaration.getCurrentOffset()));} 
-   suiteExpr() 
+   suiteInstr() 
 }
 
 void declConst() : {}
@@ -197,11 +198,17 @@ void type() :{}
  * (expression() (";" (expression())? )*)?
  * instruction() (";"(instruction())?)*
  */
-void suiteExpr() : {}
+void suiteInstr() : {}
 {  
- (expression() (";" (expression())? )*)?
+ instruction() {System.out.println("une instruction");}
+  (
+  ";"
+  	(
+  		instruction() {System.out.println("une autre instruction");}
+  	)?
+  )*
 }
-/*
+
 void instruction() : {}
 {
  affectation() 
@@ -211,7 +218,10 @@ void instruction() : {}
 
 void affectation() : {}
 {
- <ident> "=" expression() 
+{System.out.println("dans affectation");}
+ <ident> {expression.setAffectation(YakaTokenManager.identLu);} 
+ "=" 
+ expression() {expression.affectation();}  
 }
 
 void lecture() : {}
@@ -224,14 +234,13 @@ void ecriture() : {}
  <ECRIRE> "(" 
  (
  	expression() 
- 	| <chaine> 
+ 	| <chaine> {yvm.ecrireChaine(YakaTokenManager.chaineLue);} 
  )
  
  ")"
  | <ALALIGNE>
 }
 
-*/
 
 /*
  * Expression .
@@ -240,7 +249,7 @@ void expression() : {}
 {
   simpleExpr() 
   (opRel() 
-  simpleExpr() 
+  simpleExpr()  
   )?
 }
 
@@ -274,9 +283,9 @@ void primaire (): {}
 
 void valeur () : {}
 { <entier> {expression.ajoutType(Type.INT); yvm.iconst(YakaTokenManager.entierLu);}		
- | <ident> 		
- | <VRAI> {expression.ajoutType(Type.BOOL);}		
- | <FAUX> {expression.ajoutType(Type.BOOL);}		
+ | <ident> {expression.pushIdent(YakaTokenManager.identLu);}		
+ | <VRAI> {expression.pushBoolean(Constante.TRUE);}		
+ | <FAUX> {expression.pushBoolean(Constante.FALSE);}		
  
 }
 
