@@ -9,10 +9,13 @@ public class YVMasm extends YVM {
 	
 	// Debut-Fin de code
 	public void entete (){
+		Ecriture.ecrireStringln(super.out, "extrn lirent:proc, ecrent:proc");
+		Ecriture.ecrireStringln(super.out, "extrn ecrbool:proc, ecrch:proc");
+		Ecriture.ecrireStringln(super.out, "extrn ligsuiv:proc");
 		Ecriture.ecrireStringln(super.out, ".model SMALL");
 		Ecriture.ecrireStringln(super.out, ".586");
 		Ecriture.ecrireStringln(super.out, ".CODE");
-		Ecriture.ecrireStringln(super.out, "debut :");
+		Ecriture.ecrireStringln(super.out, "debut:");
 		Ecriture.ecrireStringln(super.out, "	STARTUPCODE");
 	}
 	
@@ -185,11 +188,11 @@ public class YVMasm extends YVM {
 		
 		public void ecrireChaine (String chaine){
 			Ecriture.ecrireStringln(this.out, ".DATA");
-			Ecriture.ecrireStringln(this.out,"	mess" + nbMessage + " DB \"" + chaine + "=$\"");
+			Ecriture.ecrireStringln(this.out,"	 mess" + nbMessage + " DB \"" + chaine + "=$\"");
 			Ecriture.ecrireStringln(this.out, ".CODE");
-			Ecriture.ecrireStringln(this.out,"	lea dx, mess" + nbMessage);
-			Ecriture.ecrireStringln(this.out,"	push dx");
-			Ecriture.ecrireStringln(this.out,"	call ecrch");
+			Ecriture.ecrireStringln(this.out,"	 lea dx, mess" + nbMessage);
+			Ecriture.ecrireStringln(this.out,"	 push dx");
+			Ecriture.ecrireStringln(this.out,"	 call ecrch");
 			nbMessage++;
 		}
 		

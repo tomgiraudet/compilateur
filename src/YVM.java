@@ -79,32 +79,54 @@ public class YVM {
 	
 	//Stockage et chargement
 	public void iload (int offset){
-		Ecriture.ecrireStringln(this.out,"iload" + offset);
+		Ecriture.ecrireStringln(this.out,"iload " + offset);
 	}
 	
 	public void istore (int offset){
-		Ecriture.ecrireStringln(this.out,"istore" + offset);
+		Ecriture.ecrireStringln(this.out,"istore " + offset);
 	}
 	
 	public void iconst (int val){
-		Ecriture.ecrireStringln(this.out,"iconst" + val);
+		Ecriture.ecrireStringln(this.out,"iconst " + val);
 	}
 	
 	//Controle de flot
 	public void ifeq (String etiquette){
-		Ecriture.ecrireStringln(this.out,"ifeq" + etiquette);
+		Ecriture.ecrireStringln(this.out,"ifeq " + etiquette);
 	}
 	
 	public void iffaux (String etiquette){
-		Ecriture.ecrireStringln(this.out,"iffaux" + etiquette);
+		Ecriture.ecrireStringln(this.out,"iffaux " + etiquette);
 	}
 	
 	public void togoto (String etiquette){
-		Ecriture.ecrireStringln(this.out,"goto" + etiquette);
+		Ecriture.ecrireStringln(this.out,"goto " + etiquette);
 	}
 	
 	//Instruction de pile
 	public void ouvrePrinc (int nbVariable){
-		Ecriture.ecrireStringln(this.out,"ouvrePrinc" + nbVariable);
+		Ecriture.ecrireStringln(this.out,"ouvrePrinc " + nbVariable);
 	}
+	
+	//Entree - sortie
+	public void ecrireEnt (){
+		Ecriture.ecrireStringln(this.out,"ecrireEnt");
+	}
+	
+	public void ecrireChaine (String chaine){
+		Ecriture.ecrireStringln(this.out,"ecrireChaine \"" + chaine + "\"");
+	}
+	
+	public void ecrireBool (){
+		Ecriture.ecrireStringln(this.out,"ecrireBool");
+	}
+	
+	public void lireEnt (int entier) {
+		Ecriture.ecrireStringln(this.out,"lireEnt " + entier);
+	}
+	
+	public void aLaLigne (){
+		Ecriture.ecrireStringln(this.out,"aLaLigne");
+	}
+	
 }
