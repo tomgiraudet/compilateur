@@ -3,6 +3,7 @@ public class Yaka implements YakaConstants {
   public static Declaration declaration;
   public static TabIdent tabIdent;
   public static Expression expression;
+  public static EntreeSortie inOut;
   public static YVM yvm;
 
   public static void main(String args[]) {
@@ -30,6 +31,7 @@ public class Yaka implements YakaConstants {
       tabIdent = new TabIdent();
       declaration = new Declaration();
       yvm = new YVM("result.yvm");
+      inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
@@ -177,7 +179,6 @@ public class Yaka implements YakaConstants {
  */
   static final public void suiteInstr() throws ParseException {
     instruction();
-                System.out.println("une instruction");
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -195,7 +196,6 @@ public class Yaka implements YakaConstants {
       case ALALIGNE:
       case ident:
         instruction();
-                               System.out.println("une autre instruction");
         break;
       default:
         jj_la1[7] = jj_gen;
@@ -224,7 +224,6 @@ public class Yaka implements YakaConstants {
   }
 
   static final public void affectation() throws ParseException {
- System.out.println("dans affectation");
     jj_consume_token(ident);
           expression.setAffectation(YakaTokenManager.identLu);
     jj_consume_token(42);
@@ -237,6 +236,7 @@ public class Yaka implements YakaConstants {
     jj_consume_token(43);
     jj_consume_token(ident);
     jj_consume_token(44);
+                         inOut.lire(YakaTokenManager.identLu);
   }
 
   static final public void ecriture() throws ParseException {
@@ -253,9 +253,11 @@ public class Yaka implements YakaConstants {
       case 43:
       case 51:
         expression();
+                      inOut.ecrire();
         break;
       case chaine:
         jj_consume_token(chaine);
+                    inOut.ecrireChaine(YakaTokenManager.chaineLue);
         break;
       default:
         jj_la1[9] = jj_gen;
@@ -266,6 +268,7 @@ public class Yaka implements YakaConstants {
       break;
     case ALALIGNE:
       jj_consume_token(ALALIGNE);
+               inOut.newLine();
       break;
     default:
       jj_la1[10] = jj_gen;

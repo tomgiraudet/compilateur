@@ -193,4 +193,8 @@ public class Expression {
 		}
 	}
 	
+	public Type getType(){
+		return types.pop();
+	}
+	
 }
