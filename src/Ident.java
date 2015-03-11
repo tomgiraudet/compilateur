@@ -1,5 +1,5 @@
 
-public class Ident {
+public abstract class Ident {
 	
 	protected Type type;
 	
@@ -11,8 +11,8 @@ public class Ident {
 		return type;
 	}
 	
-	public boolean isVar(){};
-	public boolean isConst(){};
+	public abstract boolean isVar();
+	public abstract boolean isConst();
 	
 	
 }
