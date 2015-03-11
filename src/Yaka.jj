@@ -46,7 +46,7 @@ public class Yaka {
       analyseur = new Yaka(input);
       expression = new Expression();
       tabIdent = new TabIdent();
-      //Declaration = new Declaration();
+      declaration = new Declaration();
       yvm = new YVM("result.yvm");
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -152,6 +152,7 @@ void analyse() : {}
 void bloc() : {}{
  (declConst())*
  (declVar())*		
+   {yvm.ouvrePrinc(Math.abs(declaration.getCurrentOffset()));} 
    suiteExpr() 
 }
 
@@ -163,41 +164,74 @@ void declConst() : {}
 void defConst() : {}
 {
 	
-  <ident>  	  	
+  <ident> {declaration.defConstante(YakaTokenManager.identLu);}  	  	
    "=" valConst()
     
 }
 
 void valConst() : {}{
-  <entier> 		
- | <ident>		
- | <VRAI> 		
- | <FAUX> 		
+  <entier> {declaration.setConstante(Type.INT, YakaTokenManager.entierLu);} 		
+ | <ident>	{declaration.setConstante(YakaTokenManager.identLu);}	
+ | <VRAI> {declaration.setConstante(Type.BOOL, Constante.TRUE);}		
+ | <FAUX> {declaration.setConstante(Type.BOOL, Constante.FALSE);}		
 }
 
 
 void declVar() : {}
 {
   <VAR> type()	
-  <ident>		
+  <ident> {declaration.defVariable(YakaTokenManager.identLu);}		
   ("," 
-      <ident>  
-  )* ";"
+      <ident> {declaration.defVariable(YakaTokenManager.identLu);} 
+  )* ";" 
 	
 }
 
 void type() :{}
 {
-   <ENTIER> 			
- | <BOOLEEN>	
+   <ENTIER> {declaration.defTypeVariable(Type.INT);}			
+ | <BOOLEEN> {declaration.defTypeVariable(Type.BOOL);}	
 }
 /*
  * Syntaxe des instructions.
+ * (expression() (";" (expression())? )*)?
+ * instruction() (";"(instruction())?)*
  */
 void suiteExpr() : {}
-{ (expression() (";" (expression())? )*)? }
+{  
+ (expression() (";" (expression())? )*)?
+}
+/*
+void instruction() : {}
+{
+ affectation() 
+ | lecture() 
+ | ecriture()
+}
 
+void affectation() : {}
+{
+ <ident> "=" expression() 
+}
 
+void lecture() : {}
+{
+ <LIRE> "(" <ident> ")"
+}
+
+void ecriture() : {}
+{
+ <ECRIRE> "(" 
+ (
+ 	expression() 
+ 	| <chaine> 
+ )
+ 
+ ")"
+ | <ALALIGNE>
+}
+
+*/
 
 /*
  * Expression .
@@ -271,8 +305,8 @@ void opMul() : {}
 } 
 
 void opNeg() : {}
-{ "-"		
- | <NON>	
+{ "-" {expression.ajoutOp(Operator.NEG);}		
+ | <NON> {expression.ajoutOp(Operator.NOT);}	
 }
 
 

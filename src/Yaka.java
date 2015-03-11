@@ -28,7 +28,7 @@ public class Yaka implements YakaConstants {
       analyseur = new Yaka(input);
       expression = new Expression();
       tabIdent = new TabIdent();
-      //Declaration = new Declaration();
+      declaration = new Declaration();
       yvm = new YVM("result.yvm");
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -76,6 +76,7 @@ public class Yaka implements YakaConstants {
       }
       declVar();
     }
+    yvm.ouvrePrinc(Math.abs(declaration.getCurrentOffset()));
     suiteExpr();
   }
 
@@ -100,6 +101,7 @@ public class Yaka implements YakaConstants {
 
   static final public void defConst() throws ParseException {
     jj_consume_token(ident);
+           declaration.defConstante(YakaTokenManager.identLu);
     jj_consume_token(42);
     valConst();
   }
@@ -108,15 +110,19 @@ public class Yaka implements YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case entier:
       jj_consume_token(entier);
+            declaration.setConstante(Type.INT, YakaTokenManager.entierLu);
       break;
     case ident:
       jj_consume_token(ident);
+                 declaration.setConstante(YakaTokenManager.identLu);
       break;
     case VRAI:
       jj_consume_token(VRAI);
+           declaration.setConstante(Type.BOOL, Constante.TRUE);
       break;
     case FAUX:
       jj_consume_token(FAUX);
+           declaration.setConstante(Type.BOOL, Constante.FALSE);
       break;
     default:
       jj_la1[3] = jj_gen;
@@ -129,6 +135,7 @@ public class Yaka implements YakaConstants {
     jj_consume_token(VAR);
     type();
     jj_consume_token(ident);
+           declaration.defVariable(YakaTokenManager.identLu);
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -141,6 +148,7 @@ public class Yaka implements YakaConstants {
       }
       jj_consume_token(40);
       jj_consume_token(ident);
+               declaration.defVariable(YakaTokenManager.identLu);
     }
     jj_consume_token(41);
   }
@@ -149,9 +157,11 @@ public class Yaka implements YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ENTIER:
       jj_consume_token(ENTIER);
+             declaration.defTypeVariable(Type.INT);
       break;
     case BOOLEEN:
       jj_consume_token(BOOLEEN);
+              declaration.defTypeVariable(Type.BOOL);
       break;
     default:
       jj_la1[5] = jj_gen;
@@ -162,6 +172,8 @@ public class Yaka implements YakaConstants {
 
 /*
  * Syntaxe des instructions.
+ * (expression() (";" (expression())? )*)?
+ * instruction() (";"(instruction())?)*
  */
   static final public void suiteExpr() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -205,6 +217,38 @@ public class Yaka implements YakaConstants {
       ;
     }
   }
+
+/*
+void instruction() : {}
+{
+ affectation() 
+ | lecture() 
+ | ecriture()
+}
+
+void affectation() : {}
+{
+ <ident> "=" expression() 
+}
+
+void lecture() : {}
+{
+ <LIRE> "(" <ident> ")"
+}
+
+void ecriture() : {}
+{
+ <ECRIRE> "(" 
+ (
+ 	expression() 
+ 	| <chaine> 
+ )
+ 
+ ")"
+ | <ALALIGNE>
+}
+
+*/
 
 /*
  * Expression .
@@ -412,9 +456,11 @@ public class Yaka implements YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 51:
       jj_consume_token(51);
+       expression.ajoutOp(Operator.NEG);
       break;
     case NON:
       jj_consume_token(NON);
+          expression.ajoutOp(Operator.NOT);
       break;
     default:
       jj_la1[18] = jj_gen;

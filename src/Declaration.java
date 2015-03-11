@@ -39,14 +39,29 @@ public class Declaration {
 		lastConstanteName = _nom;
 	}
 	
-	public void setConstante(Type _type, int _valeur) throws ErrorException{
+	public void setConstante(Type _type, int _valeur) {//throws ErrorException{
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
-			Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, offset));
-			offset -=2;
+			Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, _valeur));
+			//offset -=2;
 		}else{
-			throw new ErrorException("Constant already exists");
+			//throw new ErrorException("Constant already exists");
 		}
 	}
 	
+	public void setConstante(String ident) {//throws ErrorException{
+		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
+			IdConst con = (IdConst) Yaka.tabIdent.chercheIdent(ident);
+			if(con != null) Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
+			//else throw new ErrorException("Constant doesn't exist");
+			//offset -=2;
+		}else{
+			//throw new ErrorException("Constant already exists");
+		}
+	}
+	
+	
+	public int getCurrentOffset(){
+		return this.offset+2;
+	}
 }	
 
