@@ -11,5 +11,13 @@ public class IdConst extends Ident {
 	public int getValue(){
 		return value;
 	}
+	
+	public boolean isConst() {
+		return true;
+	}
+	
+	public boolean isVar() {
+		return false;
+	}
 
 }

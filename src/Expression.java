@@ -126,7 +126,7 @@ public class Expression {
 	}
 	
 	public void pushIdent(String id) {
-		Ident ident = Yaka.tabIdent.getIdent(id);
+		Ident ident = Yaka.tabIdent.chercheIdent(id);
 		if(ident!=null) {
 			this.types.push(ident.getType());
 			if(ident.isVar()) {
@@ -134,7 +134,7 @@ public class Expression {
 			} else if(ident.isConst()) {
 				Yaka.yvm.iconst(((IdConst)ident).getValue());
 			} else {
-				throw ErrorException(id+" isn't a constant or a variable");
+				throw new ErrorException(id+" isn't a constant or a variable");
 			}
 		} else {
 			this.stackType.push(Type.ERROR);
