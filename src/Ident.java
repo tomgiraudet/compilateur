@@ -11,4 +11,8 @@ public class Ident {
 		return type;
 	}
 	
+	public boolean isVar(){};
+	public boolean isConst(){};
+	
+	
 }

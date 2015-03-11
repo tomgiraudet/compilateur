@@ -1,16 +1,20 @@
 import java.util.Stack;
 
 public class Expression {
-	Stack<Type> types = new Stack<Type>();
-	Stack<Operator> operations = new Stack<Operator>();
+	private Stack<Type> types;
+	private Stack<Operator> operations;
 	
-	
+	public Expression() {
+		this.types = new Stack<Type>();
+		this.operations = new Stack<Operator>();
+	}
+
 	void ajoutType(Type t){
 		types.push(t);
 	}
 	
 	void ajoutOp(Operator op){
-		operations.push(op);
+		operations.push(Operator);
 	}
 	
 	Type testAddSubMulDiv(Type type1, Type type2){
@@ -21,6 +25,7 @@ public class Expression {
 		}
 		return Type.ERROR;
 	}
+	
 	Type testSupInf(Type type1, Type type2){
 		if(type1 == Type.INT){
 			if(type2 == Type.INT){
@@ -29,6 +34,7 @@ public class Expression {
 		}
 		return Type.ERROR;
 	}
+	
 	Type testEQU(Type type1, Type type2){
 		if(type1 == Type.INT){
 			if(type2 == Type.INT){
@@ -52,33 +58,88 @@ public class Expression {
 		return Type.ERROR;
 	}
 	
-	Type testStacks(){
+	void testStacks(){
 		while(operations.peek() != null){
 			switch(operations.pop()){
 			case PLUS :
+				Yaka.yvm.iadd();
+				ajoutType(testAddSubMulDiv(types.pop(), types.pop()));
+				break;
 			case MOINS :
+				Yaka.yvm.isub();
+				ajoutType(testAddSubMulDiv(types.pop(), types.pop()));
+				break;
 			case MUL :
+				Yaka.yvm.imul();
+				ajoutType(testAddSubMulDiv(types.pop(), types.pop()));
+				break;
 			case DIV :
-				types.push(testAddSubMulDiv(types.pop(), types.pop()));
-			break;
+				Yaka.yvm.idiv();
+				ajoutType(testAddSubMulDiv(types.pop(), types.pop()));
+				break;
 			case INF :
+				Yaka.yvm.iinf();
+				ajoutType(testSupInf(types.pop(), types.pop()));
+				break;
 			case SUP :
+				Yaka.yvm.isup();
+				ajoutType(testSupInf(types.pop(), types.pop()));
+				break;
 			case INFE :
+				Yaka.yvm.iinfegal();
+				ajoutType(testSupInf(types.pop(), types.pop()));
+				break;
 			case SUPE :
-				types.push(testSupInf(types.pop(), types.pop()));
-			break;
+				Yaka.yvm.isupegal();
+				ajoutType(testSupInf(types.pop(), types.pop()));
+				break;
 			case EQU :
+				Yaka.yvm.iegal();
+				ajoutType(testEQU(types.pop(), types.pop()));
+				break;
 			case DIFF :
-				types.push(testEQU(types.pop(), types.pop()));
-			break;
+				Yaka.yvm.idiff();
+				ajoutType(testEQU(types.pop(), types.pop()));
+				break;
 			case OR :
+				Yaka.yvm.ior();
+				ajoutType(testAndOr(types.pop(), types.pop()));
+				break;
 			case AND :
-				types.push(testAndOr(types.pop(), types.pop()));
-			break;
+				Yaka.yvm.iand();
+				ajoutType(testAndOr(types.pop(), types.pop()));
+				break;
 			default :
-				types.push(Type.ERROR);
+				ajoutType(Type.ERROR);
 			}
 		}
 	}
 	
+	public void pushInteger(int a) {
+		this.types.push(Type.INT);
+		Yaka.yvm.iconst(a);
+	}
+		
+	public void pushBoolean(int a) {
+		this.types.push(Type.BOOL);
+		Yaka.yvm.iconst(a);
+	}
+	
+	public void pushIdent(String id) {
+		Ident ident = Yaka.tabIdent.chercheIdent(id);
+		if(ident!=null) {
+			this.types.push(ident.getType());
+			if(ident.isVar()) {
+				Yaka.yvm.iload(((IdVar)ident).getOffset());
+			} else if(ident.isConst()) {
+				Yaka.yvm.iconst(((IdConst)ident).getValue());
+			} else {
+				throw new ErrorException(id+" isn't a constant or a variable");
+			}
+		} else {
+			this.stackType.push(Type.ERROR);
+			throw ErrorException("Ident in parameter is null");
+		}
+	}
+
 }
