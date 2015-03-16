@@ -132,11 +132,6 @@ public class Expression {
 		}
 	}
 
-	
-	/*public void pushInteger(int a) {
-		this.types.push(Type.INT);
-		Yaka.yvm.iconst(a);
-	}*/
 	public void pushBoolean(int a) {
 		this.types.push(Type.BOOL);
 		Yaka.yvm.iconst(a);
@@ -159,6 +154,7 @@ public class Expression {
 		//	throw ErrorException("Ident in parameter is null");
 		}
 	}
+	
 	void setAffectation(String nom) {
 		if(Yaka.tabIdent.existeIdent(nom)) {
 			identAffect = Yaka.tabIdent.chercheIdent(nom);

@@ -66,16 +66,19 @@ PARSER_END(Yaka)
 /***************************************/
 
 TOKEN_MGR_DECLS :
-{public static String identLu,chaineLue;
- public static int entierLu;}
+{
+public static String identLu,chaineLue;
+public static int entierLu;
+public static int currentLine;
+}
 
 /*** Skip whitespace and comments ***/
 SKIP :
 {
   " "
 | "\t"
-| "\n"
-| "\r"
+| "\n" {currentLine++;}
+| "\r" {currentLine++;}
 | "(*"   : IN_COMMENT
 }
 <IN_COMMENT> MORE:

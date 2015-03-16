@@ -30,7 +30,7 @@ public class Yaka implements YakaConstants {
       expression = new Expression();
       tabIdent = new TabIdent();
       declaration = new Declaration();
-      yvm = new YVMasm("result.asm");
+      yvm = new YVM("result.yvm");
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
