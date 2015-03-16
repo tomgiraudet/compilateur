@@ -248,7 +248,7 @@ void expression() : {}
 {
   simpleExpr() 
   (opRel() 
-  simpleExpr()  
+  simpleExpr() {expression.testStacks();}
   )?
 }
 
@@ -258,14 +258,14 @@ void simpleExpr() : {}
 {
    terme() 
    (opAdd() 
-   terme()	{expression.testStacks();}
+   terme() {expression.testStacks();}
    )*
 } 
 void terme() : {}
 {
   facteur() 
   (opMul() 
-  facteur()	{expression.testStacks();}
+  facteur() {expression.testStacks();}	
   )*
 }
 void facteur() : {}

@@ -30,7 +30,7 @@ public class Yaka implements YakaConstants {
       expression = new Expression();
       tabIdent = new TabIdent();
       declaration = new Declaration();
-      yvm = new YVM("result.yvm");
+      yvm = new YVMasm("test.asm");
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -291,6 +291,7 @@ public class Yaka implements YakaConstants {
     case 49:
       opRel();
       simpleExpr();
+                expression.testStacks();
       break;
     default:
       jj_la1[11] = jj_gen;
@@ -314,8 +315,8 @@ public class Yaka implements YakaConstants {
       }
       opAdd();
       terme();
+            expression.testStacks();
     }
-      expression.testStacks();
   }
 
   static final public void terme() throws ParseException {
@@ -334,7 +335,7 @@ public class Yaka implements YakaConstants {
       }
       opMul();
       facteur();
-                 expression.testStacks();
+             expression.testStacks();
     }
   }
 
