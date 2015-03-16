@@ -30,7 +30,7 @@ public class Yaka implements YakaConstants {
       expression = new Expression();
       tabIdent = new TabIdent();
       declaration = new Declaration();
-      yvm = new YVMasm("test.asm");
+      yvm = new YVM("result.yvm");
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -314,8 +314,8 @@ public class Yaka implements YakaConstants {
       }
       opAdd();
       terme();
-                 expression.testStacks();
     }
+      expression.testStacks();
   }
 
   static final public void terme() throws ParseException {
