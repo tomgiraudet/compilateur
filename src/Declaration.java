@@ -2,13 +2,8 @@
 public class Declaration {
 	
 	protected int offset;
-	protected Type lastType; // Utile pour des déclarations du type public int a,b,c,d
+	protected Type lastType; 
 	protected String lastConstanteName;
-	
-
-	
-	// lit une variable ou une constante et son type (+ sa valeur si c'est une constante)
-	// et ça la range avec un certain offset si c'est une variable ou sa valeur si c'est une constante dans TabIdent.
 	
 	public Declaration() {
 		this.offset = -2;
@@ -20,9 +15,12 @@ public class Declaration {
 	}
 	
 	public void defVariable(String _nom){
-		Yaka.tabIdent.rangeIdent(_nom, new IdVar(lastType, offset));
-		offset -= 2;
-		// Penser à rajouter l'erreur si la variable est déjà présente dans la table (If + erreur)
+		if (!(Yaka.tabIdent.existeIdent(_nom))){
+			Yaka.tabIdent.rangeIdent(_nom, new IdVar(lastType, offset));
+			offset -= 2;
+		}else{
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+		}
 	}
 		
 	// Constantes :
@@ -33,20 +31,19 @@ public class Declaration {
 	public void setConstante(Type _type, int _valeur) {//throws ErrorException{
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
 			Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, _valeur));
-			//offset -=2;
 		}else{
-			//throw new ErrorException("Constant already exists");
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, lastConstanteName, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 	
-	public void setConstante(String ident) {//throws ErrorException{
+	public void setConstante(String ident) {
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
 			IdConst con = (IdConst) Yaka.tabIdent.chercheIdent(ident);
-			if(con != null) Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
-			//else throw new ErrorException("Constant doesn't exist");
-			//offset -=2;
+				if(con != null){ Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
+				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
+				}
 		}else{
-			//throw new ErrorException("Constant already exists");
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 	
