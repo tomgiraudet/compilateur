@@ -1,8 +1,8 @@
 PROGRAMME testDiv
 CONST
 	a=10,
-	b=VRAI;
-	c=-5
+	b=VRAI,
+	c=5;
 VAR ENTIER r;
 	r=a/b
 FPROGRAMME

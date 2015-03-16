@@ -2,9 +2,9 @@ PROGRAMME testOpLogiqueOK
 CONST
 	a=10,
 	b=VRAI,
-	c=FALSE;
+	c=FAUX;
 VAR BOOLEEN r, t;
 	r=b OU c;
-	t=r AND c;
+	t=r ET c;
 FPROGRAMME
 
