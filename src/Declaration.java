@@ -39,7 +39,9 @@ public class Declaration {
 	public void setConstante(String ident) {
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
 			IdConst con = (IdConst) Yaka.tabIdent.chercheIdent(ident);
-				if(con != null){ Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
+				if(con != null){ 
+				Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
+				}else{
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
 				}
 		}else{
