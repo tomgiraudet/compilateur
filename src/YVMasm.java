@@ -71,9 +71,10 @@ public class YVMasm extends YVM {
 		
 		public void ineg(){
 			Ecriture.ecrireStringln(super.out, "	;ineg");
-			iconst(-1);
-			Ecriture.ecrireStringln(super.out, "	pop ax");
-			Ecriture.ecrireStringln(super.out, "	neg ax");
+			//iconst(-1);
+			Ecriture.ecrireStringln(super.out, "	pop bx");
+			Ecriture.ecrireStringln(super.out, "	mov ax, 0");
+			Ecriture.ecrireStringln(super.out, "	sub ax, bx");
 			Ecriture.ecrireStringln(super.out, "	push ax\n");
 		}
 		
@@ -174,7 +175,7 @@ public class YVMasm extends YVM {
 		
 		public void iconst (int val){
 			Ecriture.ecrireStringln(super.out, "	;iconst " + val);
-			Ecriture.ecrireStringln(super.out, "	push world ptr " + val +"\n");
+			Ecriture.ecrireStringln(super.out, "	push word ptr " + val +"\n");
 		}
 		
 		//Controle de flot
