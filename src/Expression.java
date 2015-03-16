@@ -119,7 +119,8 @@ public class Expression {
 		if(op==Operator.NEG) {
 			Yaka.yvm.ineg();
 		} else {
-		//	throw new ErrorException(op+" n'est pas la negation");
+			this.types.push(Type.ERROR);
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.WRONG_OPERATOR);
 		}
 	}
 	
@@ -128,7 +129,8 @@ public class Expression {
 		if(op==Operator.NOT) {
 		Yaka.yvm.inot();
 		} else {
-		//	throw new ErrorException(op+" n'est pas le non");
+			this.types.push(Type.ERROR);
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.WRONG_OPERATOR);
 		}
 	}
 
@@ -147,11 +149,12 @@ public class Expression {
 			} else if(ident.isConst()) {
 				Yaka.yvm.iconst(((IdConst)ident).getValue());
 			} else {
-	//			throw new ErrorException(id+" isn't a constant or a variable");
+				this.types.push(Type.ERROR);
+				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.WRONG_OPERATOR);
 			}
 		} else {
 			this.types.push(Type.ERROR);
-		//	throw ErrorException("Ident in parameter is null");
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 	
@@ -159,7 +162,8 @@ public class Expression {
 		if(Yaka.tabIdent.existeIdent(nom)) {
 			identAffect = Yaka.tabIdent.chercheIdent(nom);
 		} else {
-			//throw ErrorException(nom+" don't exist");
+			this.types.push(Type.ERROR);
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, nom, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 
@@ -171,18 +175,13 @@ public class Expression {
 			if(varType==valType) {
 				Yaka.yvm.istore(((IdVar)identAffect).getOffset());
 			} else {
-				//throw ErrorException("Types don't match at the affectation.");
-				
-				if(valType==Type.ERROR) {
-					//throw ErrorException("Error in the expression.");
-				
-				} else {
-					//throw ErrorException("Type issue.");
-				}
+				this.types.push(Type.ERROR);
+				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.MISMATCH_TYPES);
 			}
 			
 		} else {
-			//throw ErrorException("This isn't a variable");
+			this.types.push(Type.ERROR);
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.NOT_CONSTANT_OR_VARIABLE);
 		}
 	}
 	
