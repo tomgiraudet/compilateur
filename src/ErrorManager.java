@@ -1,7 +1,7 @@
 
 public class ErrorManager {
 	
-	static String NOT_CONSTANT_OR_VARIABLE 	= " isn't a constant or a variable";
+	static String NOT_CONSTANT_OR_VARIABLE 	= " this isn't a constant or a variable";
 	static String IDENT_DOESNT_EXIST		= " has not been declared";
 	static String MISMATCH_TYPES			= " types don't match at the affectation";
 	static String ERROR_IN_EXPRESSION 		= " error in expression";
