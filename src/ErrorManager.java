@@ -10,10 +10,10 @@ public class ErrorManager {
 	static String IDENT_ALREADY_EXISTS		= " already exists";
 	static String YVO_NOT_PRESENT			= " Yvo va arriver bient™t";
 	
-	public static void ErrorDeclaration(int _lineError, String _identError, String _typeError){
+	public static void errorDeclaration(int _lineError, String _identError, String _typeError){
 		System.out.println("Line " + _lineError + " : " + _identError + _typeError);
 	}
-	public static void ErrorDeclaration(int _lineError, String _typeError){
+	public static void errorDeclaration(int _lineError, String _typeError){
 		System.out.println("Line " + _lineError + " :"+ _typeError);
 	}
 }

@@ -24,16 +24,7 @@ public class Declaration {
 		offset -= 2;
 		// Penser à rajouter l'erreur si la variable est déjà présente dans la table (If + erreur)
 	}
-	
-	/*public void setVariable(String _nom, int _valeur){
-		if(Yaka.tabIdent.existeIdent(_nom)){
-			Ident clef = Yaka.tabIdent.rechercheIdent(_nom);
-			
-			
-		}// Penser au else pour l'envoie de l'erreur
 		
-	}*/
-	
 	// Constantes :
 	public void defConstante(String _nom){
 		lastConstanteName = _nom;
