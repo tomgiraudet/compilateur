@@ -1,7 +1,8 @@
-PROGRAMME testTypeNotMatch
+PROGRAMME testDiv
 CONST
 	a=10,
 	b=VRAI;
+	c=-5
 VAR ENTIER r;
-	r=b;
+	r=a/b
 FPROGRAMME
