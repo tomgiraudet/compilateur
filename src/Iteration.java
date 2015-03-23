@@ -5,7 +5,11 @@ public class Iteration {
 	
 	public Iteration() {
 		this.imbrication = new Stack<Integer>();
-		idIteration = 0;
+		idIteration = 1;
+	}
+	
+	public void testIteration(){
+		Yaka.yvm.iffaux("FAIT"+idIteration);
 	}
 	
 	public void pushIteration(){
