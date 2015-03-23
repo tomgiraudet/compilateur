@@ -223,8 +223,8 @@ void iteration() : {}
 {
  <TANTQUE> {iteration.pushIteration();}
  expression()
- <FAIRE>
- instruction()
+ <FAIRE> {iteration.testItration();}
+ suiteInstr()
  <FAIT> {iteration.popIteration();}
 }
 

@@ -234,7 +234,8 @@ public class Yaka implements YakaConstants {
             iteration.pushIteration();
     expression();
     jj_consume_token(FAIRE);
-    instruction();
+          iteration.testItration();
+    suiteInstr();
     jj_consume_token(FAIT);
          iteration.popIteration();
   }

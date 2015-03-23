@@ -16,7 +16,7 @@ public class Iteration {
 	
 	public void popIteration(){
 		int a = imbrication.pop();
-		Yka.yvm.togoto("FAIRE"+a);
+		Yaka.yvm.togoto("FAIRE"+a);
 		Yaka.yvm.etiquette("FAIT"+a);
 	}
 	

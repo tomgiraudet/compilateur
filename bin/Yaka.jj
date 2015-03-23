@@ -224,7 +224,7 @@ void iteration() : {}
  <TANTQUE> {iteration.pushIteration();}
  expression()
  <FAIRE>
- instruction()
+ suiteInstr()
  <FAIT> {iteration.popIteration();}
 }
 
