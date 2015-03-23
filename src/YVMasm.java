@@ -195,7 +195,7 @@ public class YVMasm extends YVM {
 		
 		public void togoto (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;goto " + etiquette);
-			Ecriture.ecrireStringln(super.out, "	jmp" + etiquette +"\n");	
+			Ecriture.ecrireStringln(super.out, "	jmp " + etiquette +"\n");	
 		}
 		
 		public void etiquette (String etiquette){
