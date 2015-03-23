@@ -180,21 +180,25 @@ public class YVMasm extends YVM {
 		//Controle de flot
 		public void ifeq (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;ifeq");
-			Ecriture.ecrireStringln(super.out, "	pop ax");		// pas sure que �a soit ax la valeur en sommet de pile
+			Ecriture.ecrireStringln(super.out, "	pop ax");		
 			Ecriture.ecrireStringln(super.out, "	cmp ax,0");
 			Ecriture.ecrireStringln(super.out, "	je " + etiquette +"\n");
 		}
 		
 		public void iffaux (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;iffaux");
-			Ecriture.ecrireStringln(super.out, "	pop ax");			// pas sure que �a soit ax la valeur en sommet de pile
-			Ecriture.ecrireStringln(super.out, "	cmp ax,0");		// comparer des booleens en asm? "test" ...
+			Ecriture.ecrireStringln(super.out, "	pop ax");	
+			Ecriture.ecrireStringln(super.out, "	cmp ax,0");		
 			Ecriture.ecrireStringln(super.out, "	je " + etiquette +"\n");
 		}
 		
 		public void togoto (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;goto " + etiquette);
 			Ecriture.ecrireStringln(super.out, "	jmp" + etiquette +"\n");	
+		}
+		
+		public void etiquette (String etiquette){
+			Ecriture.ecrireStringln(super.out, etiquette + ":");
 		}
 		
 		//Instruction de pile
