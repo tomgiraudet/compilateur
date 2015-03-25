@@ -20,6 +20,7 @@ PARSER_BEGIN(Yaka)
 public class Yaka {
   public static Declaration declaration;
   public static Iteration iteration;
+  public static Condition condition;
   public static TabIdent tabIdent;
   public static Expression expression;
   public static EntreeSortie inOut;
@@ -50,6 +51,7 @@ public class Yaka {
       tabIdent = new TabIdent();
       declaration = new Declaration();
       iteration = new Iteration();
+      condition = new Condition();
       yvm = new YVM("result.yvm");
       inOut = new EntreeSortie();
       analyseur.analyse();
@@ -217,15 +219,28 @@ void instruction() : {}
  | lecture() 
  | ecriture()
  | iteration()
+ | condition()
 }
 
 void iteration() : {}
 {
  <TANTQUE> {iteration.pushIteration();}
- expression()
+ expression() {iteration.testIteration();}
  <FAIRE>
- instruction()
+ suiteInstr()
  <FAIT> {iteration.popIteration();}
+}
+
+void condition() : {}
+{
+ <SI> {condition.si();}
+ expression() {condition.testCondition();}
+ <ALORS> {condition.alors();}
+ suiteInstr()
+ (<SINON> {condition.sinon();}
+ suiteInstr()
+ )*
+ <FSI> {condition.fsi();}
 }
 
 void affectation() : {}
