@@ -133,4 +133,25 @@ public class YVM {
 		Ecriture.ecrireStringln(this.out,"	aLaLigne");
 	}
 	
+	//Fonctions
+	public void ouvreBloc (int taille){
+		Ecriture.ecrireStringln(this.out,"	ouvbloc " + taille);
+	}
+	
+	public void fermeBloc (int taille){
+		Ecriture.ecrireStringln(this.out,"	fermebloc " + taille);
+	}
+	
+	public void ireturn (int offset){
+		Ecriture.ecrireStringln(this.out,"	ireturn " + offset);
+	}
+	
+	public void reserveRetour (){
+		Ecriture.ecrireStringln(this.out,"	reserveRetour");
+	}
+	
+	public void call (String nom){
+		Ecriture.ecrireStringln(this.out,"	call " + nom);
+	}
+	
 }
