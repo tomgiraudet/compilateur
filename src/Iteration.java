@@ -10,12 +10,12 @@ public class Iteration {
 	
 	public void testIteration(){
 		Yaka.yvm.iffaux("FAIT"+idIteration);
+		idIteration++;
 	}
 	
 	public void pushIteration(){
 		imbrication.push(idIteration);
 		Yaka.yvm.etiquette("FAIRE"+idIteration);
-		idIteration++;
 	}
 	
 	public void popIteration(){

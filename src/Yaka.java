@@ -32,7 +32,8 @@ public class Yaka implements YakaConstants {
       tabIdent = new TabIdent();
       declaration = new Declaration();
       iteration = new Iteration();
-      yvm = new YVM("result.yvm");
+      //yvm = new YVM("result.yvm");
+      yvm = new YVMasm("result.yvm");
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -234,7 +235,7 @@ public class Yaka implements YakaConstants {
             iteration.pushIteration();
     expression();
     jj_consume_token(FAIRE);
-          iteration.testItration();
+          iteration.testIteration();
     suiteInstr();
     jj_consume_token(FAIT);
          iteration.popIteration();
