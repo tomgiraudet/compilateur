@@ -6,7 +6,7 @@ public class Condition {
 	
 	public Condition() {
 		this.imbrication = new Stack<Integer>();
-		idIteration = 0;
+		idIteration = 1;
 	}
 	
 	public void testCondition(){
@@ -15,12 +15,10 @@ public class Condition {
 	
 	public void si(){
 		imbrication.push(idIteration);
-		idIteration++;
 	}
 	
 	public void alors(){
-		int a = imbrication.peek();
-		Yaka.yvm.etiquette("FSI"+a);
+		idIteration++;
 	}
 	
 	public void sinon(){
