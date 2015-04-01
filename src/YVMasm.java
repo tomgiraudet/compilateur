@@ -195,7 +195,7 @@ public class YVMasm extends YVM {
 		
 		public void togoto (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;goto " + etiquette);
-			Ecriture.ecrireStringln(super.out, "	jmp" + etiquette +"\n");	
+			Ecriture.ecrireStringln(super.out, "	jmp " + etiquette +"\n");	
 		}
 		
 		public void etiquette (String etiquette){
@@ -242,6 +242,29 @@ public class YVMasm extends YVM {
 		public void aLaLigne (){
 			Ecriture.ecrireStringln(super.out, "	;aLaLigne");
 			Ecriture.ecrireStringln(this.out,"	call ligsuiv\n");
+		}
+		
+		//Fonctions
+		public void ouvreBloc (int taille){
+			Ecriture.ecrireStringln(this.out,"	enter " + taille + ",0");
+		}
+		
+		public void fermeBloc (int taille){
+			Ecriture.ecrireStringln(this.out,"	leave");
+			Ecriture.ecrireStringln(this.out,"	ret " + taille);
+		}
+		
+		public void ireturn (int offset){
+			Ecriture.ecrireStringln(this.out,"	pop ax");
+			Ecriture.ecrireStringln(this.out,"	mov [bp+" + offset + "], ax");
+		}
+		
+		public void reserveRetour (){
+			Ecriture.ecrireStringln(this.out,"	sub sp, 2");
+		}
+		
+		public void call (String nom){
+			Ecriture.ecrireStringln(this.out,"	call " + nom);
 		}
 
 }
