@@ -2,11 +2,13 @@
 public class Declaration {
 	
 	protected int offset;
+	protected int offsetParam;
 	protected Type lastType; 
 	protected String lastConstanteName;
 	
 	public Declaration() {
 		this.offset = -2;
+		this.offsetParam = 4;
 	}
 	
 	// Variables : 
@@ -55,7 +57,21 @@ public class Declaration {
 		}
 	}
 	
+	// Param :
+	public void defTypeParam(Type _type){
+		lastType = _type;
+	}
 	
+	public void defParam(String _nom){
+		if (!(Yaka.tabIdent.existeIdent(_nom))){
+			Yaka.tabIdent.rangeIdent(_nom, new IdParam(lastType, offset));
+			offset -= 2;
+		}else{
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+		}
+	}
+	
+	// Offset :
 	public int getCurrentOffset(){
 		return this.offset+2;
 	}
