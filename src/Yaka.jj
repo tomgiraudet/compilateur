@@ -236,10 +236,10 @@ void condition() : {}
  <SI> {condition.si();}
  expression() {condition.testCondition();}
  <ALORS> {condition.alors();}
+ suiteInstr() {condition.sinon();}
+ (<SINON> 
  suiteInstr()
- (<SINON> {condition.sinon();}
- suiteInstr()
- )*
+ )?
  <FSI> {condition.fsi();}
 }
 
