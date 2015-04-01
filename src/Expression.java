@@ -51,8 +51,10 @@ public class Expression {
 		}
 		return Type.ERROR;
 	}
+	
+	
 	void testStacks(){
-		while(!operations.isEmpty()){				
+		if(!operations.isEmpty()){				
 			switch(operations.pop()){
 			case PLUS :
 				Yaka.yvm.iadd();

@@ -1,0 +1,10 @@
+PROGRAMME testOpLogiqueOK
+CONST
+	a=10,
+	b=VRAI,
+	c=FAUX;
+VAR BOOLEEN r, t;
+	r=b OU c;
+	t=r ET c;
+FPROGRAMME
+

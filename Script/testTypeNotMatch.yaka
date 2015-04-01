@@ -1,0 +1,7 @@
+PROGRAMME testTypeNotMatch
+CONST
+	a=10,
+	b=VRAI;
+VAR ENTIER r;
+	r=b;
+FPROGRAMME

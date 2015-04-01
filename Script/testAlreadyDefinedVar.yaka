@@ -1,0 +1,9 @@
+PROGRAMME testAlreaydyDefinedVar
+CONST
+	a=10,
+	b=VRAI;
+VAR ENTIER r;
+VAR ENTIER a;
+	r=a+b;
+FPROGRAMME
+

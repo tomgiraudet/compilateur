@@ -1,0 +1,7 @@
+PROGRAMME testSousNeg
+CONST
+	a=10,
+	b=15;
+VAR ENTIER r;
+	r=a-b;
+FPROGRAMME

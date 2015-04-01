@@ -71,9 +71,10 @@ public class YVMasm extends YVM {
 		
 		public void ineg(){
 			Ecriture.ecrireStringln(super.out, "	;ineg");
-			iconst(-1);
-			Ecriture.ecrireStringln(super.out, "	pop ax");
-			Ecriture.ecrireStringln(super.out, "	neg ax");
+			//iconst(-1);
+			Ecriture.ecrireStringln(super.out, "	pop bx");
+			Ecriture.ecrireStringln(super.out, "	mov ax, 0");
+			Ecriture.ecrireStringln(super.out, "	sub ax, bx");
 			Ecriture.ecrireStringln(super.out, "	push ax\n");
 		}
 		
@@ -174,27 +175,31 @@ public class YVMasm extends YVM {
 		
 		public void iconst (int val){
 			Ecriture.ecrireStringln(super.out, "	;iconst " + val);
-			Ecriture.ecrireStringln(super.out, "	push world ptr " + val +"\n");
+			Ecriture.ecrireStringln(super.out, "	push word ptr " + val +"\n");
 		}
 		
 		//Controle de flot
 		public void ifeq (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;ifeq");
-			Ecriture.ecrireStringln(super.out, "	pop ax");		// pas sure que �a soit ax la valeur en sommet de pile
+			Ecriture.ecrireStringln(super.out, "	pop ax");		
 			Ecriture.ecrireStringln(super.out, "	cmp ax,0");
 			Ecriture.ecrireStringln(super.out, "	je " + etiquette +"\n");
 		}
 		
 		public void iffaux (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;iffaux");
-			Ecriture.ecrireStringln(super.out, "	pop ax");			// pas sure que �a soit ax la valeur en sommet de pile
-			Ecriture.ecrireStringln(super.out, "	cmp ax,0");		// comparer des booleens en asm? "test" ...
+			Ecriture.ecrireStringln(super.out, "	pop ax");	
+			Ecriture.ecrireStringln(super.out, "	cmp ax,0");		
 			Ecriture.ecrireStringln(super.out, "	je " + etiquette +"\n");
 		}
 		
 		public void togoto (String etiquette){
 			Ecriture.ecrireStringln(super.out, "	;goto " + etiquette);
-			Ecriture.ecrireStringln(super.out, "	jmp" + etiquette +"\n");	
+			Ecriture.ecrireStringln(super.out, "	jmp " + etiquette +"\n");	
+		}
+		
+		public void etiquette (String etiquette){
+			Ecriture.ecrireStringln(super.out, etiquette + ":");
 		}
 		
 		//Instruction de pile
@@ -237,6 +242,29 @@ public class YVMasm extends YVM {
 		public void aLaLigne (){
 			Ecriture.ecrireStringln(super.out, "	;aLaLigne");
 			Ecriture.ecrireStringln(this.out,"	call ligsuiv\n");
+		}
+		
+		//Fonctions
+		public void ouvreBloc (int taille){
+			Ecriture.ecrireStringln(this.out,"	enter " + taille + ",0");
+		}
+		
+		public void fermeBloc (int taille){
+			Ecriture.ecrireStringln(this.out,"	leave");
+			Ecriture.ecrireStringln(this.out,"	ret " + taille);
+		}
+		
+		public void ireturn (int offset){
+			Ecriture.ecrireStringln(this.out,"	pop ax");
+			Ecriture.ecrireStringln(this.out,"	mov [bp+" + offset + "], ax");
+		}
+		
+		public void reserveRetour (){
+			Ecriture.ecrireStringln(this.out,"	sub sp, 2");
+		}
+		
+		public void call (String nom){
+			Ecriture.ecrireStringln(this.out,"	call " + nom);
 		}
 
 }

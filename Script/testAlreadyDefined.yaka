@@ -1,0 +1,7 @@
+PROGRAMME testAlreadyDefined
+CONST
+	a=10,
+	a=5;
+VAR ENTIER r;
+	r=a+b;
+FPROGRAMME

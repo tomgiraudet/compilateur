@@ -1,0 +1,7 @@
+PROGRAMME testAddBool
+CONST
+	a=10,
+	b=VRAI;
+VAR ENTIER r;
+	r=a+b;
+FPROGRAMME
