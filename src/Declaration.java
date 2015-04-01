@@ -41,16 +41,10 @@ public class Declaration {
 	public void setConstante(String ident) {
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
 			IdConst con = (IdConst) Yaka.tabIdent.chercheIdent(ident);
-<<<<<<< HEAD
 				if(con != null){ 
 				Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
 				}else{
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
-=======
-				if(con != null){ Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(con.type, con.value));
-				}else{
-					ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
->>>>>>> 5d82d2d4e5b21494cce4bae6ef794a7119f00507
 				}
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_ALREADY_EXISTS);
@@ -64,8 +58,8 @@ public class Declaration {
 	
 	public void defParam(String _nom){
 		if (!(Yaka.tabIdent.existeIdent(_nom))){
-			Yaka.tabIdent.rangeIdent(_nom, new IdParam(lastType, offset));
-			offset -= 2;
+			Yaka.tabIdent.rangeIdent(_nom, new IdParam(lastType, offsetParam));
+			offset +=2;
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
@@ -74,6 +68,10 @@ public class Declaration {
 	// Offset :
 	public int getCurrentOffset(){
 		return this.offset+2;
+	}
+	
+	public int getCurrentOffsetParam(){
+		return this.offsetParam-2;
 	}
 }	
 
