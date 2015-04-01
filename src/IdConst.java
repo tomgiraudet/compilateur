@@ -12,12 +12,20 @@ public class IdConst extends Ident {
 		return value;
 	}
 	
-	public boolean isConst() {
-		return true;
-	}
-	
-	public boolean isVar() {
-		return false;
-	}
-
+	// FONCTIONS DE TEST :
+		public boolean isConst() {
+			return true;
+		}
+		
+		public boolean isVar() {
+			return false;
+		}
+		
+		public boolean isFunction() {
+			return false;
+		}
+		
+		public boolean isParam() {
+			return false;
+		}
 }
