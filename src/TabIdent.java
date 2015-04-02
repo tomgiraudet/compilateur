@@ -22,6 +22,21 @@ public class TabIdent {
 		table.put(clef, id);
 	}
 	
+	
+	
+	
+	public Ident chercheLocalIdent(String clef){
+		return table.get(clef);
+	}
+	
+	public boolean existeLocalIdent(String clef){
+		return table.containsKey(clef);
+	}
+	
+	public void rangeLocalIdent(String clef, Ident id){
+		localTable.put(clef, id);
+	}
+	
 	public void clearLocalTable(){
 		localTable.clear();
 	}
