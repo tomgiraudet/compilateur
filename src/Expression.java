@@ -143,7 +143,7 @@ public class Expression {
 	
 	
 	public void pushIdent(String id) {
-		Ident ident = Yaka.tabIdent.chercheIdent(id);
+		Ident ident = Yaka.tabIdent.chercheLocalIdent(id);
 		if(ident!=null) {
 			this.types.push(ident.getType());
 			if(ident.isVar()) {
@@ -161,8 +161,8 @@ public class Expression {
 	}
 	
 	void setAffectation(String nom) {
-		if(Yaka.tabIdent.existeIdent(nom)) {
-			identAffect = Yaka.tabIdent.chercheIdent(nom);
+		if(Yaka.tabIdent.existeLocalIdent(nom)) {
+			identAffect = Yaka.tabIdent.chercheLocalIdent(nom);
 		} else {
 			this.types.push(Type.ERROR);
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, nom, ErrorManager.IDENT_DOESNT_EXIST);
