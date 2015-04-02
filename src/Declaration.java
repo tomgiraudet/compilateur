@@ -17,8 +17,8 @@ public class Declaration {
 	}
 	
 	public void defVariable(String _nom){
-		if (!(Yaka.tabIdent.existeIdent(_nom))){
-			Yaka.tabIdent.rangeIdent(_nom, new IdVar(lastType, offset));
+		if (!(Yaka.tabIdent.existeLocalIdent(_nom))){
+			Yaka.tabIdent.rangeLocalIdent(_nom, new IdVar(lastType, offset));
 			offset -= 2;
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
@@ -57,8 +57,8 @@ public class Declaration {
 	}
 	
 	public void defParam(String _nom){
-		if (!(Yaka.tabIdent.existeIdent(_nom))){
-			Yaka.tabIdent.rangeIdent(_nom, new IdParam(lastType, offsetParam));
+		if (!(Yaka.tabIdent.existeLocalIdent(_nom))){
+			Yaka.tabIdent.rangeLocalIdent(_nom, new IdParam(lastType, offsetParam));
 			offset +=2;
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
