@@ -30,18 +30,22 @@ public class IdFunction extends Ident {
 	}
 	
 	// FONCTIONS DE TEST :
+		@Override
 		public boolean isConst() {
 			return false;
 		}
 		
+		@Override
 		public boolean isVar() {
 			return false;
 		}
 		
+		@Override
 		public boolean isFunction() {
 			return true;
 		}
 		
+		@Override
 		public boolean isParam() {
 			return false;
 		}

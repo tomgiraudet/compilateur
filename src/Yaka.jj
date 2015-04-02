@@ -154,9 +154,26 @@ TOKEN  :
 void analyse() : {}
 {
    <PROGRAMME>{yvm.entete();} 
-   <ident>	
+   <ident>
+   (declFonction())*
+   <PRINCIPAL>
    bloc()
+   <FPRINCIPAL>
    <FPROGRAMME> {yvm.enqueue();}
+}
+
+void declFonction() : {}{
+ type() <FONCTION> <ident> paramForms()
+ bloc()
+ <FFONCTION>
+}
+
+void paramForms() : {}Ê{
+ (paramForm() (","paramForm())*)?
+}
+
+void paramForm() : {} {
+ type() <ident>
 }
 
 void bloc() : {}{
@@ -220,6 +237,12 @@ void instruction() : {}
  | ecriture()
  | iteration()
  | condition()
+ | retourne()
+}
+
+void retourne() : {}
+{
+ <RETOURNE> expression()
 }
 
 void iteration() : {}
@@ -309,10 +332,15 @@ void primaire (): {}
 
 void valeur () : {}
 { <entier> {expression.ajoutType(Type.INT); yvm.iconst(YakaTokenManager.entierLu);}		
- | <ident> {expression.pushIdent(YakaTokenManager.identLu);}		
+ | <ident> {expression.pushIdent(YakaTokenManager.identLu);} (arguementsFonction())?		
  | <VRAI> {expression.pushBoolean(Constante.TRUE);}		
  | <FAUX> {expression.pushBoolean(Constante.FALSE);}		
  
+}
+
+void arguementsFonction() : {}
+{
+ (expression() ("," expression())*)?
 }
 
 void opRel() : {}
