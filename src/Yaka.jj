@@ -163,17 +163,17 @@ void analyse() : {}
 }
 
 void declFonction() : {}{
- type() <FONCTION> <ident> paramForms()
+ type() <FONCTION> <ident>{declaration.declareFunction(YakaTokenManager.identLu); expression.openBlocFunction(YakaTokenManager.identLu);} paramForms()
  bloc()
- <FFONCTION>
+ <FFONCTION>{declaration.endFunction();}
 }
 
-void paramForms() : {}Ê{
- (paramForm() (","paramForm())*)?
+void paramForms() : {}{
+ "("(paramForm() (","paramForm())*)?")"
 }
 
 void paramForm() : {} {
- type() <ident>
+ type() <ident> {declaration.defParam(YakaTokenManager.identLu);}
 }
 
 void bloc() : {}{
@@ -206,7 +206,7 @@ void valConst() : {}{
 
 void declVar() : {}
 {
-  <VAR> type()	
+  <VAR> type() {}	
   <ident> {declaration.defVariable(YakaTokenManager.identLu);}		
   ("," 
       <ident> {declaration.defVariable(YakaTokenManager.identLu);} 
@@ -216,8 +216,8 @@ void declVar() : {}
 
 void type() :{}
 {
-   <ENTIER> {declaration.defTypeVariable(Type.INT);}			
- | <BOOLEEN> {declaration.defTypeVariable(Type.BOOL);}	
+   <ENTIER> {declaration.defType(Type.INT);}			
+ | <BOOLEEN> {declaration.defType(Type.BOOL);}	
 }
 /*
  * Syntaxe des instructions.
@@ -242,7 +242,7 @@ void instruction() : {}
 
 void retourne() : {}
 {
- <RETOURNE> expression()
+ <RETOURNE> expression() {expression.checkReturnFunction();}
 }
 
 void iteration() : {}
@@ -332,15 +332,15 @@ void primaire (): {}
 
 void valeur () : {}
 { <entier> {expression.ajoutType(Type.INT); yvm.iconst(YakaTokenManager.entierLu);}		
- | <ident> {expression.pushIdent(YakaTokenManager.identLu);} (arguementsFonction())?		
+ | <ident> {expression.pushIdent(YakaTokenManager.identLu);} (arguementsFonction() {expression.checkCallFunction();})?		
  | <VRAI> {expression.pushBoolean(Constante.TRUE);}		
- | <FAUX> {expression.pushBoolean(Constante.FALSE);}		
+ | <FAUX> {expression.pushBoolean(Constante.FALSE);}
  
 }
 
 void arguementsFonction() : {}
 {
- (expression() ("," expression())*)?
+ "("(expression() {expression.pushParameters();} ("," expression(){expression.pushParameters();})*)?")"
 }
 
 void opRel() : {}

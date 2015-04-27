@@ -2,11 +2,16 @@ import java.util.Stack;
 public class Expression {
 	private Stack<Type> types;
 	private Stack<Operator> operations;
+	private IdFunction last_function;
 	private Ident identAffect;
+	private Stack<IdFunction> functions;
+	private Stack<Stack<Type>> parameters;
 	
 	public Expression() {
 		this.types = new Stack<Type>();
 		this.operations = new Stack<Operator>();
+		this.functions = new Stack<IdFunction>();
+		this.parameters = new Stack<Stack<Type>>();
 	}
 	void ajoutType(Type t){
 		types.push(t);
@@ -143,18 +148,23 @@ public class Expression {
 	
 	
 	public void pushIdent(String id) {
-		Ident ident = Yaka.tabIdent.chercheLocalIdent(id);
-		if(ident!=null) {
+		
+		if(Yaka.tabIdent.existeLocalIdent(id)) {
+			Ident ident = Yaka.tabIdent.chercheLocalIdent(id);
 			this.types.push(ident.getType());
 			if(ident.isVar()) {
 				Yaka.yvm.iload(((IdVar)ident).getOffset());
 			} else if(ident.isConst()) {
 				Yaka.yvm.iconst(((IdConst)ident).getValue());
-			} else {
+			} else if(ident.isParam()){
+				Yaka.yvm.iload(((IdParam)ident).getOffset());
+			}else{
 				this.types.push(Type.ERROR);
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.WRONG_OPERATOR);
 			}
-		} else {
+		} else if(Yaka.tabIdent.existeIdent(id)){
+			functions.add((IdFunction) Yaka.tabIdent.chercheIdent(id));
+		}else{
 			this.types.push(Type.ERROR);
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.IDENT_DOESNT_EXIST);
 		}
@@ -163,7 +173,9 @@ public class Expression {
 	void setAffectation(String nom) {
 		if(Yaka.tabIdent.existeLocalIdent(nom)) {
 			identAffect = Yaka.tabIdent.chercheLocalIdent(nom);
-		} else {
+		} else if(Yaka.tabIdent.existeIdent(nom)){
+			identAffect = Yaka.tabIdent.chercheIdent(nom);
+		}else{
 			this.types.push(Type.ERROR);
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, nom, ErrorManager.IDENT_DOESNT_EXIST);
 		}
@@ -180,10 +192,43 @@ public class Expression {
 				this.types.push(Type.ERROR);
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.MISMATCH_TYPES);
 			}
-			
-		} else {
+		}else if(this.identAffect.isFunction()){
+			System.out.println("C'est une fonction");
+		}else {
 			this.types.push(Type.ERROR);
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.NOT_CONSTANT_OR_VARIABLE);
+		}
+	}
+	
+	void pushParameters(){
+		parameters.get(functions.size()-1).add(types.pop());
+	}
+	
+	void checkCallFunction(){
+		IdFunction func = functions.pop();
+		Stack<Type> params = parameters.get(functions.size()-1);
+		if(params.size() != func.paramList.size()){
+			System.out.println("WRONG NUMBER OF PARAMETERS");
+			//ERROR WRONG NUMBER OF PARAMETERS
+			return;
+		}
+		for (Type p : func.paramList){
+			if(p != params.get(params.size()-1)){
+				System.out.println("WRONG TYPE OF PARAMETERS");
+				return;
+			}
+		}
+	}
+	
+	void openBlocFunction(String nom){
+		last_function = (IdFunction) Yaka.tabIdent.chercheIdent(nom);
+	}
+	
+	void checkReturnFunction(){
+		if(last_function.type.equals(types.pop())){
+			types.push(last_function.type);
+		}else{
+			types.push(Type.ERROR);
 		}
 	}
 	

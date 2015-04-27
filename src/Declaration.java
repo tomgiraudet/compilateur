@@ -5,14 +5,15 @@ public class Declaration {
 	protected int offsetParam;
 	protected Type lastType; 
 	protected String lastConstanteName;
+	protected IdFunction lastFunction;
 	
 	public Declaration() {
-		this.offset = -2;
-		this.offsetParam = 4;
+		this.offset = 0;
+		this.offsetParam = 2;
 	}
 	
 	// Variables : 
-	public void defTypeVariable(Type _type){
+	public void defType(Type _type){
 		lastType = _type;
 	}
 	
@@ -52,17 +53,31 @@ public class Declaration {
 	}
 	
 	// Param :
-	public void defTypeParam(Type _type){
-		lastType = _type;
-	}
-	
+
 	public void defParam(String _nom){
 		if (!(Yaka.tabIdent.existeLocalIdent(_nom))){
 			Yaka.tabIdent.rangeLocalIdent(_nom, new IdParam(lastType, offsetParam));
-			offset +=2;
+			lastFunction.addParam(lastType);
+			offsetParam +=2;
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
+	}
+	
+	public void declareFunction(String _nom){
+		if (!(Yaka.tabIdent.existeIdent(_nom))){
+			Yaka.tabIdent.rangeIdent(_nom, new IdFunction(_nom, lastType));
+			lastFunction = (IdFunction) Yaka.tabIdent.chercheIdent(_nom);
+			offset -=2;
+		}else{
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+		}
+	}
+	
+	public void endFunction(){
+		Yaka.tabIdent.clearLocalTable();
+		this.offset = 0;
+		this.offsetParam = 2;
 	}
 	
 	// Offset :

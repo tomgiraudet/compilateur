@@ -26,11 +26,11 @@ public class TabIdent {
 	
 	
 	public Ident chercheLocalIdent(String clef){
-		return table.get(clef);
+		return localTable.get(clef);
 	}
 	
 	public boolean existeLocalIdent(String clef){
-		return table.containsKey(clef);
+		return localTable.containsKey(clef);
 	}
 	
 	public void rangeLocalIdent(String clef, Ident id){

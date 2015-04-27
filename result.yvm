@@ -1,20 +1,17 @@
 	entete
 	ouvrePrinc 6
-	lireEnt -2
-	aLaLigne
-	lireEnt -4
-	aLaLigne
-	iload -4
+	iload 2
 	istore -6
-	iload -2
-	iload -4
+	iload -6
+	iload 4
 	isup
 	iffaux SINON1
-	iload -2
-	istore -6
+	iload -6
 	goto FSI1
 SINON1:
+	iload 4
 FSI1:
-	iload -6
-	ecrireEnt
+	ouvrePrinc 6
+	iconst 5
+	istore 0
 	queue
