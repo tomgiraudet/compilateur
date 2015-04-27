@@ -13,6 +13,8 @@ public abstract class Ident {
 	
 	abstract public boolean isVar();
 	abstract public boolean isConst();
+	abstract public boolean isFunction();
+	abstract public boolean isParam();
 	
 	
 }

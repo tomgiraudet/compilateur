@@ -1,9 +1,9 @@
 
-public class IdVar extends Ident{
+public class IdParam extends Ident {
 	
 	protected int offset;
 	
-	public IdVar(Type _type, int _offset){
+	public IdParam(Type _type, int _offset){
 		super(_type);
 		offset = _offset;
 	}
@@ -11,21 +11,25 @@ public class IdVar extends Ident{
 	public int getOffset(){
 		return offset;
 	}
-
+	
 	// FONCTIONS DE TEST :
+	@Override
 		public boolean isConst() {
 			return false;
 		}
 		
+	@Override
 		public boolean isVar() {
-			return true;
+			return false;
 		}
 		
+	@Override
 		public boolean isFunction() {
 			return false;
 		}
 		
+	@Override
 		public boolean isParam() {
-			return false;
+			return true;
 		}
 }
