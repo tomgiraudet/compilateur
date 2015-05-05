@@ -156,9 +156,9 @@ void analyse() : {}
    <PROGRAMME>{yvm.entete();} 
    <ident>
    (declFonction())*
-   <PRINCIPAL>
+   <PRINCIPAL> {yvm.etiquette("main");}
    bloc()
-   <FPRINCIPAL>
+   <FPRINCIPAL> 
    <FPROGRAMME> {yvm.enqueue();}
 }
 
@@ -169,7 +169,7 @@ void declFonction() : {}{
 }
 
 void paramForms() : {}{
- "("(paramForm() (","paramForm())*)?")"
+ "("(paramForm() (","paramForm())*)?")"{declaration.refreshOffsetParam();}
 }
 
 void paramForm() : {} {
@@ -179,7 +179,7 @@ void paramForm() : {} {
 void bloc() : {}{
  (declConst())*
  (declVar())*		
-   {yvm.ouvrePrinc(Math.abs(declaration.getCurrentOffset()));} 
+   {yvm.ouvreBloc(Math.abs(declaration.getCurrentOffset()));} 
    suiteInstr() 
 }
 
@@ -242,7 +242,7 @@ void instruction() : {}
 
 void retourne() : {}
 {
- <RETOURNE> expression() {expression.checkReturnFunction();}
+ <RETOURNE> expression() {expression.checkReturnFunction();yvm.ireturn(declaration.getCurrentOffsetParam()+2);}
 }
 
 void iteration() : {}

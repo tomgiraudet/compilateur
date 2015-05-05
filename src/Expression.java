@@ -222,6 +222,7 @@ public class Expression {
 	
 	void openBlocFunction(String nom){
 		last_function = (IdFunction) Yaka.tabIdent.chercheIdent(nom);
+		Yaka.yvm.etiquette(nom);
 	}
 	
 	void checkReturnFunction(){

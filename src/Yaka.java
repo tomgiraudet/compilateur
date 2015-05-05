@@ -66,6 +66,7 @@ public class Yaka implements YakaConstants {
       declFonction();
     }
     jj_consume_token(PRINCIPAL);
+                yvm.etiquette("main");
     bloc();
     jj_consume_token(FPRINCIPAL);
     jj_consume_token(FPROGRAMME);
@@ -108,6 +109,7 @@ public class Yaka implements YakaConstants {
       ;
     }
     jj_consume_token(42);
+                                        declaration.refreshOffsetParam();
   }
 
   static final public void paramForm() throws ParseException {
@@ -141,7 +143,7 @@ public class Yaka implements YakaConstants {
       }
       declVar();
     }
-    yvm.ouvrePrinc(Math.abs(declaration.getCurrentOffset()));
+    yvm.ouvreBloc(Math.abs(declaration.getCurrentOffset()));
     suiteInstr();
   }
 
@@ -302,7 +304,7 @@ public class Yaka implements YakaConstants {
   static final public void retourne() throws ParseException {
     jj_consume_token(RETOURNE);
     expression();
-                          expression.checkReturnFunction();
+                          expression.checkReturnFunction();yvm.ireturn(declaration.getCurrentOffsetParam()+2);
   }
 
   static final public void iteration() throws ParseException {
