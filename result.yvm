@@ -39,6 +39,40 @@ sup:
 main:
 	ouvbloc 8
 	iconst 5
-	istore 0
+	istore -2
+	lireEnt -4
 	aLaLigne
-	iload 0
+	reserveRetour
+	iload -2
+	reserveRetour
+	iload -4
+	iconst 5
+	call min
+	call max
+	iconst 2
+	iadd
+	istore -6
+	reserveRetour
+	iconst 1
+	reserveRetour
+	iload -2
+	iload -4
+	iconst 5
+	isub
+	call max
+	iadd
+	reserveRetour
+	iload -2
+	iconst 2
+	imul
+	iload -4
+	call min
+	call sup
+	istore -8
+	aLaLigne
+	iload -6
+	ecrireEnt
+	aLaLigne
+	iload -8
+	ecrireBool
+	queue

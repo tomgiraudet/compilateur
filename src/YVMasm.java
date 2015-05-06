@@ -16,6 +16,9 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(super.out, ".model SMALL");
 		Ecriture.ecrireStringln(super.out, ".586\n");
 		Ecriture.ecrireStringln(super.out, ".CODE");
+	}
+	
+	public void ouvreMain(){
 		Ecriture.ecrireStringln(super.out, "debut:");
 		Ecriture.ecrireStringln(super.out, "	STARTUPCODE");
 	}
@@ -24,7 +27,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(super.out, "	;queue");
 		Ecriture.ecrireStringln(super.out, "	nop");
 		Ecriture.ecrireStringln(super.out, "	EXITCODE");
-		Ecriture.ecrireStringln(super.out, "	End debut\n");
+		Ecriture.ecrireStringln(super.out, "	end\n");
 	}
 	
 	// Arithmetique
@@ -164,13 +167,13 @@ public class YVMasm extends YVM {
 		//Stockage et chargement
 		public void iload (int offset){
 			Ecriture.ecrireStringln(super.out, "	;iload " + offset);
-			Ecriture.ecrireStringln(super.out, "	push word ptr [bp" + offset + "]\n");
+			Ecriture.ecrireStringln(super.out, "	push word ptr [bp" + (offset>0 ? "+" : "") + offset + "]\n");
 		}
 		
 		public void istore (int offset){
 			Ecriture.ecrireStringln(super.out, "	;istore " + offset);
 			Ecriture.ecrireStringln(super.out, "	pop ax");
-			Ecriture.ecrireStringln(super.out, "	mov word ptr [bp" + offset + "], ax\n");
+			Ecriture.ecrireStringln(super.out, "	mov word ptr [bp" + (offset>0 ? "+" : "") + offset + "], ax\n");
 		}
 		
 		public void iconst (int val){

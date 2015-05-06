@@ -34,7 +34,7 @@ public class Yaka implements YakaConstants {
       declaration = new Declaration();
       iteration = new Iteration();
       condition = new Condition();
-      yvm = new YVM("result.yvm");
+      yvm = new YVMasm("result.asm");
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -66,7 +66,7 @@ public class Yaka implements YakaConstants {
       declFonction();
     }
     jj_consume_token(PRINCIPAL);
-                yvm.etiquette("main");
+                yvm.ouvreMain();yvm.etiquette("main");declaration.declareFunction("main");
     bloc();
     jj_consume_token(FPRINCIPAL);
     jj_consume_token(FPROGRAMME);

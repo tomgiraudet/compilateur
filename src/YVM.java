@@ -15,6 +15,10 @@ public class YVM {
 		Ecriture.ecrireStringln(this.out,"	entete");		
 	}
 	
+	public void ouvreMain(){
+		
+	}
+	
 	public void enqueue (){
 		Ecriture.ecrireStringln(this.out,"	queue");		
 	}

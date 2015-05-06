@@ -41,5 +41,9 @@ public class TabIdent {
 	public HashMap<String, Ident> getLocalTable() {
 		return localTable;
 	}
+	
+	public HashMap<String, Ident> getTable() {
+		return table;
+	}
 
 }

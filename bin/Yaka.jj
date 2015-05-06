@@ -156,7 +156,7 @@ void analyse() : {}
    <PROGRAMME>{yvm.entete();} 
    <ident>
    (declFonction())*
-   <PRINCIPAL> {yvm.etiquette("main");}
+   <PRINCIPAL> {yvm.ouvreMain();yvm.etiquette("main");declaration.declareFunction("main");}
    bloc()
    <FPRINCIPAL> 
    <FPROGRAMME> {yvm.enqueue();}

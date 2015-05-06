@@ -10,8 +10,8 @@ public class EntreeSortie {
 			Yaka.yvm.ecrireBool();
 		} else if(type==Type.INT) {
 			Yaka.yvm.ecrireEnt();
-		} else {
-			// Erreur
+		}else{
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.MISMATCH_TYPES);
 		}
 	}
 	
@@ -21,12 +21,12 @@ public class EntreeSortie {
 	}
 	
 	void lire(String ident) {
-		if(Yaka.tabIdent.existeIdent(ident)) {
-			if(Yaka.tabIdent.chercheIdent(ident).isVar()) {
-				Yaka.yvm.lireEnt(((IdVar)Yaka.tabIdent.chercheIdent(ident)).getOffset());
+		if(Yaka.tabIdent.existeLocalIdent(ident)) {
+			if(Yaka.tabIdent.chercheLocalIdent(ident).isVar()) {
+				Yaka.yvm.lireEnt(((IdVar)Yaka.tabIdent.chercheLocalIdent(ident)).getOffset());
 			}
-		} else {
-			// Erreur
+		}else{
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 }

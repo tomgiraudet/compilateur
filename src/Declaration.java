@@ -22,7 +22,7 @@ public class Declaration {
 	}
 
 	public void defVariable(String _nom){
-		if (!(Yaka.tabIdent.existeLocalIdent(_nom))){
+		if (!(Yaka.tabIdent.existeLocalIdent(_nom)) && !(Yaka.tabIdent.existeIdent(_nom))){
 			Yaka.tabIdent.rangeLocalIdent(_nom, new IdVar(lastType, offset));
 			offset -= 2;
 			numberVar++;
@@ -37,18 +37,18 @@ public class Declaration {
 	}
 
 	public void setConstante(Type _type, int _valeur) {//throws ErrorException{
-		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
-			Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(_type, _valeur));
+		if (!(Yaka.tabIdent.existeIdent(lastConstanteName)) && !(Yaka.tabIdent.existeLocalIdent(lastConstanteName))){
+			Yaka.tabIdent.rangeLocalIdent(lastConstanteName, new IdConst(_type, _valeur));
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, lastConstanteName, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
 	public void setConstante(String ident) {
-		if (!(Yaka.tabIdent.existeIdent(lastConstanteName))){
-			IdConst cst = (IdConst) Yaka.tabIdent.chercheIdent(ident);
+		if (!(Yaka.tabIdent.existeLocalIdent(lastConstanteName))){
+			IdConst cst = (IdConst) Yaka.tabIdent.chercheLocalIdent(ident);
 			if(cst != null){ 
-				Yaka.tabIdent.rangeIdent(lastConstanteName, new IdConst(cst.type, cst.value));
+				Yaka.tabIdent.rangeLocalIdent(lastConstanteName, new IdConst(cst.type, cst.value));
 			}else{
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
 			}
@@ -57,10 +57,8 @@ public class Declaration {
 		}
 	}
 
-	// Param :
-
 	public void defParam(String _nom){
-		if (!(Yaka.tabIdent.existeLocalIdent(_nom))){
+		if (!(Yaka.tabIdent.existeIdent(_nom)) && !(Yaka.tabIdent.existeLocalIdent(_nom))){
 			Yaka.tabIdent.rangeLocalIdent(_nom, new IdParam(lastType, ++numberParam));
 			lastFunction.addParam(lastType);
 			offsetParam+=2;
@@ -69,12 +67,11 @@ public class Declaration {
 		}
 	}
 
-	public void declareFunction(String _nom){
-		if (!(Yaka.tabIdent.existeIdent(_nom))){
+	public void declareFunction(String _nom){	
+		if (!(Yaka.tabIdent.existeIdent(_nom)) && !(Yaka.tabIdent.existeLocalIdent(_nom))){
 			Yaka.tabIdent.rangeIdent(_nom, new IdFunction(_nom, lastType));
 			lastFunction = (IdFunction) Yaka.tabIdent.chercheIdent(_nom);
-			offset -=2;
-			
+			offset -=2;		
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
@@ -89,9 +86,7 @@ public class Declaration {
 		numberVar = 0;
 	}
 
-	// Offset :
 	public int getCurrentOffset(){
-		//return this.offset+2;
 		return numberVar * 2;
 	}
 

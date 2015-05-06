@@ -11,6 +11,7 @@ public class IdFunction extends Ident {
 	// constructeur
 	public IdFunction(String _name, Type _type){
 		super(_type);
+		name = _name;
 		paramList = new ArrayList<Type>();
 	}
 

@@ -8,12 +8,17 @@ public class ErrorManager {
 	static String TYPE_ISSUE				= " type issue";
 	static String WRONG_OPERATOR			= " wrong operator";
 	static String IDENT_ALREADY_EXISTS		= " already exists";
-	static String YVO_NOT_PRESENT			= " Yvo va arriver bient™t";
+	static String UNKNOWN_ERROR				= " Whaaat ???";
+	static String WRONG_TYPE_PARAMETERS		= " wrong types of parameters";
+	static String WRONG_NUMBER_PARAMETERS	= " wrong number of parameters";
+	static String WRONG_RETURN_TYPE			= " wrong return type";
+	static String FUNCTION_AFFECTATION		= " impossible to affect a function";
 	
 	public static void errorDeclaration(int _lineError, String _identError, String _typeError){
-		System.out.println("Line " + _lineError + " : " + _identError + _typeError);
+		System.err.println("Line " + ++_lineError + " : " + _identError + _typeError);
 	}
+	
 	public static void errorDeclaration(int _lineError, String _typeError){
-		System.out.println("Line " + _lineError + " :"+ _typeError);
+		System.err.println("Line " + ++_lineError + " :"+ _typeError);
 	}
 }
