@@ -11,7 +11,7 @@ public class EntreeSortie {
 		} else if(type==Type.INT) {
 			Yaka.yvm.ecrireEnt();
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.MISMATCH_TYPES);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.MISMATCH_TYPES);
 		}
 	}
 	
@@ -26,7 +26,7 @@ public class EntreeSortie {
 				Yaka.yvm.lireEnt(((IdVar)Yaka.tabIdent.chercheLocalIdent(ident)).getOffset());
 			}
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 }

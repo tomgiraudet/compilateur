@@ -27,7 +27,7 @@ public class Declaration {
 			offset -= 2;
 			numberVar++;
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
@@ -40,7 +40,7 @@ public class Declaration {
 		if (!(Yaka.tabIdent.existeIdent(lastConstanteName)) && !(Yaka.tabIdent.existeLocalIdent(lastConstanteName))){
 			Yaka.tabIdent.rangeLocalIdent(lastConstanteName, new IdConst(_type, _valeur));
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, lastConstanteName, ErrorManager.IDENT_ALREADY_EXISTS);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, lastConstanteName, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
@@ -50,10 +50,10 @@ public class Declaration {
 			if(cst != null){ 
 				Yaka.tabIdent.rangeLocalIdent(lastConstanteName, new IdConst(cst.type, cst.value));
 			}else{
-				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
+				ErrorManager.errorDeclaration(Yaka.token.beginLine, ident, ErrorManager.IDENT_DOESNT_EXIST);
 			}
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ident, ErrorManager.IDENT_ALREADY_EXISTS);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ident, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
@@ -63,7 +63,7 @@ public class Declaration {
 			lastFunction.addParam(lastType);
 			offsetParam+=2;
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
@@ -73,10 +73,11 @@ public class Declaration {
 			lastFunction = (IdFunction) Yaka.tabIdent.chercheIdent(_nom);
 			offset -=2;		
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, _nom, ErrorManager.IDENT_ALREADY_EXISTS);
 		}
 	}
 
+	
 	public void endFunction(){
 		Yaka.tabIdent.clearLocalTable();
 		this.offset = 0;

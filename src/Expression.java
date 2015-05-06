@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Stack;
 public class Expression {
 	private Stack<Type> types;
@@ -59,7 +60,7 @@ public class Expression {
 
 
 	void testStacks(){
-		if(!operations.isEmpty()){				
+		if(!operations.isEmpty()){
 			switch(operations.pop()){
 			case PLUS :
 				Yaka.yvm.iadd();
@@ -110,10 +111,10 @@ public class Expression {
 				ajoutType(testAndOr(types.pop(), types.pop()));
 				break;
 			case NOT :
-				Yaka.yvm.inot();
+				negationBool();
 				break;
 			case NEG :
-				Yaka.yvm.ineg();
+				negationInt();
 				break;
 			default :
 				ajoutType(Type.ERROR);
@@ -121,23 +122,21 @@ public class Expression {
 		}
 	}
 
-	void NegationInt(){
-		Operator op = this.operations.pop();
-		if(op==Operator.NEG) {
+	void negationInt(){
+		if(types.peek() == Type.INT) {
 			Yaka.yvm.ineg();
 		} else {
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.WRONG_OPERATOR);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.WRONG_OPERATOR);
 		}
 	}
 
-	void NegationBool(){
-		Operator op = this.operations.pop();
-		if(op==Operator.NOT) {
+	void negationBool(){
+		if(types.peek() == Type.BOOL) {
 			Yaka.yvm.inot();
 		} else {
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.WRONG_OPERATOR);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.WRONG_OPERATOR);
 		}
 	}
 
@@ -159,7 +158,7 @@ public class Expression {
 				Yaka.yvm.iload(((IdParam)ident).getOffset());
 			}else{
 				this.types.push(Type.ERROR);
-				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.WRONG_OPERATOR);
+				ErrorManager.errorDeclaration(Yaka.token.beginLine, id, ErrorManager.WRONG_OPERATOR);
 			}
 		} else if(Yaka.tabIdent.existeIdent(id)){
 			IdFunction ident = (IdFunction) Yaka.tabIdent.chercheIdent(id);
@@ -169,7 +168,7 @@ public class Expression {
 			Yaka.yvm.reserveRetour();
 		}else{
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, id, ErrorManager.IDENT_DOESNT_EXIST);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, id, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 
@@ -180,7 +179,7 @@ public class Expression {
 			identAffect = Yaka.tabIdent.chercheIdent(nom);
 		}else{
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, nom, ErrorManager.IDENT_DOESNT_EXIST);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, nom, ErrorManager.IDENT_DOESNT_EXIST);
 		}
 	}
 
@@ -193,13 +192,13 @@ public class Expression {
 				Yaka.yvm.istore(((IdVar)identAffect).getOffset());
 			} else {
 				this.types.push(Type.ERROR);
-				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.MISMATCH_TYPES);
+				ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.MISMATCH_TYPES);
 			}
 		}else if(this.identAffect.isFunction()){
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.FUNCTION_AFFECTATION);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.FUNCTION_AFFECTATION);
 		}else {
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.IMPOSSIBLE_AFFECTION);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.IMPOSSIBLE_AFFECTION);
 		}
 	}
 
@@ -208,7 +207,7 @@ public class Expression {
 			Type t = types.pop();
 			parameters.peek().push(t);
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.UNKNOWN_ERROR);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.UNKNOWN_ERROR);
 		}
 	}
 
@@ -216,19 +215,20 @@ public class Expression {
 		if(functions.size() > 0){
 			IdFunction func = functions.pop();
 			Stack<Type> params = parameters.pop();
+			
 			if(params.size() != func.paramList.size()){
-				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, func.name, ErrorManager.WRONG_NUMBER_PARAMETERS);
+				ErrorManager.errorDeclaration(Yaka.token.beginLine, func.name, ErrorManager.WRONG_NUMBER_PARAMETERS);
 				return;
 			}
 			for (int i = 0; i<params.size();i++){
 				if(params.get(i) != func.paramList.get(i)){
-					ErrorManager.errorDeclaration(YakaTokenManager.currentLine, func.name, ErrorManager.WRONG_TYPE_PARAMETERS);
+					ErrorManager.errorDeclaration(Yaka.token.beginLine, func.name, ErrorManager.WRONG_TYPE_PARAMETERS);
 					return;
 				}
 			}
 			Yaka.yvm.call(func.name);
 		}else{
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.UNKNOWN_ERROR);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, ErrorManager.UNKNOWN_ERROR);
 		}
 	}
 
@@ -238,11 +238,17 @@ public class Expression {
 	}
 
 	void checkReturnFunction(){
+		if(last_function.type == Type.MAIN){
+			types.push(Type.ERROR);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, last_function.name, ErrorManager.ILLEGAL_MAIN);
+			return;
+		}
+		
 		if(last_function.type.equals(types.pop())){
 			types.push(last_function.type);
 		}else{
 			types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, last_function.name, ErrorManager.WRONG_RETURN_TYPE);
+			ErrorManager.errorDeclaration(Yaka.token.beginLine, last_function.name, ErrorManager.WRONG_RETURN_TYPE);
 		}
 	}
 

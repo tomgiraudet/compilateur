@@ -12,10 +12,10 @@ public class Yaka implements YakaConstants {
     Yaka analyseur;
     java.io.InputStream input;
 
-    if (args.length==1) {
-      System.out.print(args[args.length-1] + ": ");
+    if (args.length==2) {
+      System.out.println(args[args.length-1] + ": ");
       try {
-        input = new java.io.FileInputStream(args[args.length-1]+".yaka");
+        input = new java.io.FileInputStream(args[args.length-1]);
       } catch (java.io.FileNotFoundException e) {
         System.out.println("Fichier introuvable.");
         return;
@@ -34,7 +34,11 @@ public class Yaka implements YakaConstants {
       declaration = new Declaration();
       iteration = new Iteration();
       condition = new Condition();
-      yvm = new YVMasm("result.asm");
+      if(args[0].equals("-asm")){
+    	  yvm = new YVMasm("out.asm");
+      }else{
+    	  yvm = new YVM("out.yvm");
+      }
       inOut = new EntreeSortie();
       analyseur.analyse();
       System.out.println("analyse syntaxique reussie!");
@@ -66,7 +70,7 @@ public class Yaka implements YakaConstants {
       declFonction();
     }
     jj_consume_token(PRINCIPAL);
-                yvm.ouvreMain();yvm.etiquette("main");declaration.declareFunction("main");
+                yvm.ouvreMain();declaration.defType(Type.MAIN);declaration.declareFunction("main");expression.openBlocFunction("main");
     bloc();
     jj_consume_token(FPRINCIPAL);
     jj_consume_token(FPROGRAMME);
