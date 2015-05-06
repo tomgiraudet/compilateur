@@ -199,13 +199,14 @@ public class Expression {
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.FUNCTION_AFFECTATION);
 		}else {
 			this.types.push(Type.ERROR);
-			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.NOT_CONSTANT_OR_VARIABLE);
+			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.IMPOSSIBLE_AFFECTION);
 		}
 	}
 
 	void pushParameters(){
 		if(types.size()>0 && parameters.size() > 0){
-			parameters.peek().push(types.pop());
+			Type t = types.pop();
+			parameters.peek().push(t);
 		}else{
 			ErrorManager.errorDeclaration(YakaTokenManager.currentLine, ErrorManager.UNKNOWN_ERROR);
 		}
@@ -219,8 +220,8 @@ public class Expression {
 				ErrorManager.errorDeclaration(YakaTokenManager.currentLine, func.name, ErrorManager.WRONG_NUMBER_PARAMETERS);
 				return;
 			}
-			for (Type p : func.paramList){
-				if(p != params.get(params.size()-1)){
+			for (int i = 0; i<params.size();i++){
+				if(params.get(i) != func.paramList.get(i)){
 					ErrorManager.errorDeclaration(YakaTokenManager.currentLine, func.name, ErrorManager.WRONG_TYPE_PARAMETERS);
 					return;
 				}

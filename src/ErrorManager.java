@@ -13,6 +13,7 @@ public class ErrorManager {
 	static String WRONG_NUMBER_PARAMETERS	= " wrong number of parameters";
 	static String WRONG_RETURN_TYPE			= " wrong return type";
 	static String FUNCTION_AFFECTATION		= " impossible to affect a function";
+	static String IMPOSSIBLE_AFFECTION		= " affectation is impossible";
 	
 	public static void errorDeclaration(int _lineError, String _identError, String _typeError){
 		System.err.println("Line " + ++_lineError + " : " + _identError + _typeError);
